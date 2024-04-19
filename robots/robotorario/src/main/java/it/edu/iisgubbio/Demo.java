@@ -5,7 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class Deemo {
+public class Demo {
     public static void main(String[] args) throws Exception {
         // URL della sezione "Tecnologia" del sito web "[URL non valido rimosso]"
         final String URL_ORARI = "https://lnx.iisgubbio.edu.it/Orario/orario_docenti_nuovo.html";
