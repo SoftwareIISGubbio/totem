@@ -27,3 +27,4 @@ per provare se mysql è in ascolto basta una roba del genere:
 Per provare la connessione da terminale `mysql -h localhost -u utente -p totem` e poi si può usare SQL per, ad esempio, creare le tabelle.
 
 ## le tabelle
+orario contiene i dati delle singole ore
