@@ -1,0 +1,80 @@
+<!DOCTYPE html><!--let intervalli = window.setInterval(funzione, 3600000);-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            background-color: aqua;
+            max-height:33%;
+            overflow: hidden; 
+            max-width: 33%;
+        }
+
+    </style>
+     <script>
+        let url="https://api.openweathermap.org/data/2.5/forecast?lat=43.351598463559746&lon=12.565889046590783&appid=0a857a725d5695891c056943591b7115&units=metric";
+        let dati;
+
+        async function caricamento(){
+            const risposta = await fetch(url);
+            let oraSpan = document.getElementsByClassName("ora");
+
+            if(risposta.ok){
+                dati= await risposta.json();
+                console.log(dati);
+
+                for(let i=0; i<oraSpan.length; i++){
+
+                    let transito = dati.list[i].dt_txt;
+                    let transito1 = transito.split(" ");
+                    ora =transito1[1].split(":");
+                    console.log(ora[0]);
+                    oraSpan[i].innerHTML= ora[0];
+                }
+
+                for(let i=0; i<oraSpan.length; i++){
+
+                    let transito = dati.list[i].dt_txt;
+                    let transito1 = transito.split(" ");
+                    ora =transito1[1].split(":");
+                    console.log(ora[0]);
+                    oraSpan[i].innerHTML= ora[0];
+                }
+
+                //ca.innerHTML = dati.list[0].weather[0].icon;
+                url="https://openweathermap.org/img/wn/"+dati.list[0].weather[0].icon+"@4x.png";
+                //icn.src=url;
+            }
+           
+        }
+
+        
+    </script>
+</head>
+<body onload="caricamento()">
+    <div>
+        <p>
+            <span class="ora">caio</span>
+            <img class="icon" alt="icon">
+            <span class="tempo"></span>
+        </p>
+        <p>
+            <span class="ora"></span>
+            <img class="icon" alt="icon">
+            <span class="tempo"></span>
+        </p>
+        <p>
+            <span class="ora"></span>
+            <img class="icon" alt="icon">
+            <span class="tempo"></span>
+        </p>
+        <p>
+            <span class="ora"></span>
+            <img class="icon" alt="icon">
+            <span class="tempo"></span>
+        </p>
+    </div>
+</body>
+</html>
