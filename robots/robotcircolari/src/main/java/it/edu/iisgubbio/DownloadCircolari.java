@@ -1,6 +1,7 @@
 package it.edu.iisgubbio;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
@@ -38,7 +39,7 @@ public class DownloadCircolari {
             // controlla headless
         }
 
-        ArchivioCircolari archivo =new ArchivioCircolari(cartellaDownload);
+        ArrayList<Circolare> archivioCircolari = new ArrayList<Circolare>();
         // configuro il driver
         // Configura le opzioni di Firefox per gestire i download dei PDF
         FirefoxOptions options = new FirefoxOptions();
@@ -75,15 +76,23 @@ public class DownloadCircolari {
         for(WebElement elem: elementi) {
             // Prendo il nome della circolare
             String titolo = elem.findElement( By.cssSelector("p") ).getText();
-            System.out.println( titolo);
-            // Scarto eventuali allegati che non devono essere scaricati scaricare
+            
+            // Scarto eventuali allegati che non devono essere scaricati
+            // Ottengo il link
             WebElement link = elem.findElement(By.cssSelector("div.media-right a.link-to-file"));
-            if(!archivo.esiste(Circolare.getNumeroDaNome(titolo)) && Circolare.isCircolare(titolo)){
-            	link.click();
-            }
+            String dataDoc = link.getAttribute("data-doc");
+            String dataCli = link.getAttribute("data-cli");
+            String linx = "https://www.iisgubbio.edu.it/sdg/app/default/view_documento.php?a=akVIEW_FROM_ID&id_documento="+dataDoc+"&sede_codice="+dataCli;
+            
+            //Ottengo la data
+            WebElement data = elem.findElement(By.cssSelector("li.list-group-item strong"));
+            
+            //Ottengo la tipolgia
+            WebElement tipo = elem.findElement(By.cssSelector("li + li.list-group-item strong"));
+
+            Circolare nuova = new Circolare(titolo, linx, data.getText(), tipo.getText());
+
         }
-        // Attendo per far si che eventuali download in corso vengano completati
-        Thread.sleep(2000);
         driver.quit();
     }
 
