@@ -9,34 +9,38 @@ import java.util.regex.Pattern;
  ***************************************************************************/
 public class Circolare {
     private String nome;
-    private int numero;
+    private String numero;
     private String link;
     private String data;
-    private String tipologia;
+    private String[] tipologia;
 
     /************************************************************************
      * Imposta il nomeCompleto del file da cui poi prendere il numero e il
      * nome
      *
-     * @param nomeFile il nome completo del file
      ***********************************************************************/
     public Circolare(String nomeFile, String link, String data, String tipologia){
-        this.link = link;
-        this.tipologia=tipologia;
+        this.link=link;
+        System.out.println(this.link);
+        this.tipologia=tipologia.split(",");
+        System.out.println(this.tipologia[0]);
         
         String[] valori = data.split("-");
         this.data=valori[2]+"-"+valori[1]+"-"+valori[0];
+        System.out.println(this.data);
     	
     	Matcher m = patMat(nomeFile);
 
         if (m.find( )) {
-            numero=Integer.parseInt(m.group(1));
-            nome=m.group(2);
+            this.numero = m.group(1);
+            this.nome = m.group(2);
             System.out.println("numero circolare: " + m.group(1) );
             System.out.println("nome circolare: " + m.group(2) );
         } else {
             System.out.println("NO MATCH");
         }
+        
+        
     }
     
 
@@ -46,41 +50,59 @@ public class Circolare {
      * @param nomeCompleto il nome completo del file
      ***********************************************************************/
     private static Matcher patMat(String nomeCompleto) {
-        Pattern r = Pattern.compile("^CIRC([0-9]+) *(.*)$");
+        Pattern r = Pattern.compile("^(CIRC[0-9]+) *(.*)$");
 
         return r.matcher(nomeCompleto);
     }
+    
+	public String getNome() {
+		return nome;
+	}
 
-    /************************************************************************
-     * Ricava il numero della circolare utilizzando il nome completo del file
-     *
-     * @param nomeCompleto il nome completo del file
-     ***********************************************************************/
-    public static int getNumeroDaNome(String nomeCompleto) {
-        Matcher m = patMat(nomeCompleto);
 
-        if (m.find( )) {
-            return Integer.parseInt(m.group(1));
-        } else {
-            System.out.println("NO MATCH : getNumero");
-        }
-        return 0;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    /************************************************************************
-     * Verifica se il file rispetta i requisiti per essere un oggetto
-     * Circolare partendo dal nome completo
-     *
-     * @param nomeCompleto il nome completo del file
-     ***********************************************************************/
-    public static boolean isCircolare(String nomeCompleto) {
-        Matcher m = patMat(nomeCompleto);
 
-        if (m.find( )) {
-            return true;
-        }
-        return false;
-    }
+	public String getNumero() {
+		return numero;
+	}
+
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+
+	public String getLink() {
+		return link;
+	}
+
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+
+	public String getData() {
+		return data;
+	}
+
+
+	public void setData(String data) {
+		this.data = data;
+	}
+
+
+	public String[] getTipologia() {
+		return tipologia;
+	}
+
+
+	public void setTipologia(String tipologia) {
+		this.tipologia = tipologia.split(",");
+	}
     
     
 }
