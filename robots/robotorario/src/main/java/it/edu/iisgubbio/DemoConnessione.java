@@ -1,11 +1,10 @@
 package it.edu.iisgubbio;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 
-public class ParseHtml {
+public class DemoConnessione {
     public static void main(String[] args) throws Exception {
         System.out.println("ciao");
         String url = "jdbc:mysql://192.168.64.7:3306/prova";
