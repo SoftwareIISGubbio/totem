@@ -33,4 +33,17 @@ public class OrarioManager {
         Example<Orario> example = Example.of(o);
         return repoOra.findAll( example );
     }
+    
+    @GetMapping("/professori")
+    public List<String> professore() {
+    	
+		return repoOra.elencaProfessori();
+    	
+    }
+    
+    @GetMapping("/classi")
+    public List<String> classe() {
+    	return repoOra.elencaClassi();
+    }
+    
 }
