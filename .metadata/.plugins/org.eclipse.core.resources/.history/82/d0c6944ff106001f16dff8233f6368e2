@@ -1,0 +1,31 @@
+package it.edu.iisgubbio.servertotem.circolari;
+
+import java.time.LocalDate;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class Circolari {
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
+	
+	String nome;
+	String link;
+	Integer numero;
+	LocalDate data;
+	Boolean famiglia;
+	Boolean docenti;
+	Boolean personale;
+	Boolean alunni;
+	Boolean tutti;
+	
+	
+	
+	
+
+}

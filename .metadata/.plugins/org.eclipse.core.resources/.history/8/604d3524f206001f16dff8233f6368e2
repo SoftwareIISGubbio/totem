@@ -1,0 +1,41 @@
+package it.edu.iisgubbio.servertotem.circolari;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import it.edu.iisgubbio.servertotem.orario.Orario;
+
+public class CircolariManager {
+
+	@Autowired
+	RepoCircolari repoCircolari;
+	
+	 @GetMapping("/circolari")
+	    public List<Circolari> cerca(
+	        @RequestParam(required = false) String nome,
+	        @RequestParam(required = false) String link,
+	        @RequestParam(required = false) Integer numero,
+	        @RequestParam(required = false) LocalDate data,
+	        @RequestParam(required = false) Boolean famiglia,
+	        @RequestParam(required = false) Boolean docenti,
+	        @RequestParam(required = false) Boolean personale,
+	        @RequestParam(required = false) Boolean albo_sindacale,
+	    ) {
+	        Orario o = new Orario();
+	        o.setClasse(classe);
+	        o.setProfessore(professore);
+	        o.setAula(aula);
+	        o.setOra(ora);
+	        o.setGiorno(giorno);
+	        Example<Orario> example = Example.of(o);
+	        return repoOra.findAll( example );
+	    }
+	}
+	
+	
+}
