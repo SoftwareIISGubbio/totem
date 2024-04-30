@@ -10,16 +10,28 @@
             max-height:33%;
             overflow: hidden; 
             max-width: 33%;
+            background-image: url("pioggia.jpeg");
+            background-size: cover;
+            color: white;
+        }
+        span{
+            font-size: 200%;
+            font-weight: bolder;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+         
         }
 
     </style>
      <script>
         let url="https://api.openweathermap.org/data/2.5/forecast?lat=43.351598463559746&lon=12.565889046590783&appid=0a857a725d5695891c056943591b7115&units=metric";
         let dati;
+        let id;
+        let id1;
 
         async function caricamento(){
             const risposta = await fetch(url);
             let oraSpan = document.getElementsByClassName("ora");
+            let intervalli = window.setInterval(caricamento, 3600000);
 
             if(risposta.ok){
                 dati= await risposta.json();
@@ -35,7 +47,6 @@
                 }
 
                 for(let i=0; i<oraSpan.length; i++){
-
                     let transito = dati.list[i].dt_txt;
                     let transito1 = transito.split(" ");
                     ora =transito1[1].split(":");
@@ -44,10 +55,31 @@
                 }
 
                 //ca.innerHTML = dati.list[0].weather[0].icon;
-                url="https://openweathermap.org/img/wn/"+dati.list[0].weather[0].icon+"@4x.png";
-                //icn.src=url;
+                let icona = document.getElementsByClassName("icon");
+                let temperatura = document.getElementsByClassName("tempo");
+        
+                for(let i=0; i<icona.length; i++){
+                    url="https://openweathermap.org/img/wn/"+dati.list[i].weather[0].icon+"@2x.png";
+                    icona[i].src=url;
+                    temperatura[i].innerText= dati.list[0].main.temp+"°";
+                }
+                id = dati.list[0].weather[0].icon;
+                id1 = dati.list[0].weather[0].icon;
+                //url="https://openweathermap.org/img/wn/"+dati.list[0].weather[0].icon+"@4x.png";
+                //icona[0].src=url;
+
             }
+            let intervallo = window.setInterval(sfondoP, 1800000);
            
+        }
+        function sfondoP(){
+            let sfondo = document.getElementsByClassName("sfondo");
+            if(id=="01d"){
+                sfondo.style.backgroundimage= url("sole.jpg");
+            }
+            if(("02d", "03d", "04d").includes(id)){
+                sfondo.style.backgroundimage= url("nuvoloso.jpg");
+            }
         }
 
         
@@ -55,22 +87,22 @@
 </head>
 <body onload="caricamento()">
     <div>
-        <p>
+        <p class="sfondo">
             <span class="ora">caio</span>
             <img class="icon" alt="icon">
             <span class="tempo"></span>
         </p>
-        <p>
+        <p class="sfondo">
             <span class="ora"></span>
             <img class="icon" alt="icon">
             <span class="tempo"></span>
         </p>
-        <p>
+        <p class="sfondo">
             <span class="ora"></span>
             <img class="icon" alt="icon">
             <span class="tempo"></span>
         </p>
-        <p>
+        <p class="sfondo">
             <span class="ora"></span>
             <img class="icon" alt="icon">
             <span class="tempo"></span>

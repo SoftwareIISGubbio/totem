@@ -18,6 +18,7 @@ buildNumber.properties
 # Eclipse Core
 .project
 .settings
+.metadata/
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
