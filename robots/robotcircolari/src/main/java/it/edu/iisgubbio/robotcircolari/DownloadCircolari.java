@@ -19,7 +19,7 @@ import java.sql.Statement;
  * @author Filippo Nardoni
  ***************************************************************************/
 public class DownloadCircolari {
-	static String url = "jdbc:mysql://10.1.0.52/totem";
+	static String url = "jdbc:mysql://10.1.0.52:3306/totem";
 	static String username = "totem";
 	static String password = "totem";
 
@@ -97,12 +97,11 @@ public class DownloadCircolari {
 
 				Circolare nuova = new Circolare(titolo, linx, data.getText(), tipo.getText());
 				
-				//String sql = "INSERT INTO circolari (nome,telefono) VALUES ('samuele','+39vattelappesca')";
-				//Statement istruzione = connection.createStatement();
-
-				// Esecuzione della query di inserimento
-				//istruzione.executeUpdate(sql);
-				//System.out.println("Record inserito correttamente!");
+				String sql = "INSERT INTO circolari (nome,link,numero,data,famiglia,docenti,personale,alunni,albo_sindacale) VALUES ()";
+	            Statement istruzione = connection.createStatement();
+	            // Esecuzione della query di inserimento
+	            istruzione.executeUpdate(sql);
+	            System.out.println("Record inserito correttamente!");
 			} 
 		}
 		catch (Exception e) {
