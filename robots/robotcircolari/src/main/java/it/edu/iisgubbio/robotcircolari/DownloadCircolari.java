@@ -101,7 +101,7 @@ public class DownloadCircolari {
 	            Statement istruzione = connection.createStatement();
 	            // Esecuzione della query di inserimento
 	            istruzione.executeUpdate(sql);
-	            System.out.println("Record inserito correttamente!");
+	            System.out.println("Record inserito correttamente!!");
 			} 
 		}
 		catch (Exception e) {
