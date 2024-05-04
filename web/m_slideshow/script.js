@@ -8,14 +8,14 @@ const slide = [
     {file:"SDG-icon-IT-RGB-04.jpg", testo:"L’iscrizione nelle scuole primarie nei Paesi in via di sviluppo ha raggiunto il 91%, ma 57 milioni di bambini ne sono ancora esclusi. Più della metà dei bambini non iscritti a scuola vive in Africa subsahariana"},
 ];
 
-let indice = 0;
-let box;
-let infoAperte = false;
+let slideshowIndice = 0;
+let slideshowBox;
+let slideshowInfoAperte = false;
 function mostraInfo(){
-    infoAperte = true;
+    slideshowInfoAperte = true;
     let info = document.createElement("div");
     info.style.position = "fixed";
-    info.innerText = slide[indice].testo;
+    info.innerText = slide[slideshowIndice].testo;
     info.style.cssText = `
         position: absolute;
         min-height: 40%; width: 40%;
@@ -23,44 +23,43 @@ function mostraInfo(){
         background-color:rgba(255,255,255,0.92);
         padding:1rem; border: 3px solid #eecd00;
         font-size:5vh`;
-    info.addEventListener("click", () => {document.querySelector("body").removeChild(info); infoAperte=false;} );
+    info.addEventListener("click", () => {document.querySelector("body").removeChild(info); slideshowInfoAperte=false;} );
     document.querySelector("body").appendChild(info);
 }
 
 function cambiaSlide(){
-    if(infoAperte==false){
-        indice = (indice+1) % slide.length;
-        console.log(indice);
-        box.innerHTML = '';
-        box.removeEventListener("click", mostraInfo);
+    if(slideshowInfoAperte==false){
+        slideshowIndice = (slideshowIndice+1) % slide.length;
+        slideshowBox.innerHTML = '';
+        slideshowBox.removeEventListener("click", mostraInfo);
 
-        box.style.backgroundImage = "url(m_slideshow/"+slide[indice].file+")";
+        slideshowBox.style.backgroundImage = "url(m_slideshow/"+slide[slideshowIndice].file+")";
 
         let titolo = document.createElement("p");
         titolo.style.margin = "0";
         titolo.style.background = "#eecd00";
         titolo.innerText="agenda 2030";
-        box.appendChild(titolo);
+        slideshowBox.appendChild(titolo);
 
-        if(slide[indice].testo){
+        if(slide[slideshowIndice].testo){
             let info = document.createElement("p");
             info.style.margin = "0";
             info.innerText="click per info";
             info.style.background = "#eecd00";
-            box.appendChild(info);
-            box.addEventListener("click", mostraInfo);
+            slideshowBox.appendChild(info);
+            slideshowBox.addEventListener("click", mostraInfo);
         }
     }
 }
 
 function m_slideshow(id){
-    box = document.getElementById(id);
+    slideshowBox = document.getElementById(id);
     // offsetWidth and offsetHeight properties i
-    let width = box.offsetWidth;
-    let height = box.offsetHeight;
+    let width = slideshowBox.offsetWidth;
+    let height = slideshowBox.offsetHeight;
     // serve "+=" per mantene3re eventuali impostazioni fatte nella pagina pricipale
     // a meno di idee più articolate
-    box.style.cssText += `
+    slideshowBox.style.cssText += `
         color: blue; background-color: #444;
         text-align: center;
         background-repeat: no-repeat; background-position: center 95%;
