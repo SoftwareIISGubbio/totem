@@ -15,8 +15,8 @@ public class Orario {
 	String classe;
 	String professore;
 	String aula;
-	String ora;
-	String giorno;
+	Integer ora;
+	Integer giorno;
 	
 	public Integer getId() {
 		return id;
@@ -42,16 +42,16 @@ public class Orario {
 	public void setAula(String aula) {
 		this.aula = aula;
 	}
-	public String getOra() {
+	public Integer getOra() {
 		return ora;
 	}
-	public void setOra(String ora) {
+	public void setOra(Integer ora) {
 		this.ora = ora;
 	}
-	public String getGiorno() {
+	public Integer getGiorno() {
 		return giorno;
 	}
-	public void setGiorno(String giorno) {
+	public void setGiorno(Integer giorno) {
 		this.giorno = giorno;
 	}
 	
