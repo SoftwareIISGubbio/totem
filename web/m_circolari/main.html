@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Circolari</title>
     <style>
+        body {
+            margin: 0em;
+        }
+
         .container {
             display: grid;
             width: 100%;
@@ -27,17 +31,18 @@
             border: 1px solid black;
             text-align: center;
             vertical-align: middle;
+            background-color: #323639;
+            display: grid;
+            place-items: center;
         }
 
         .ultimecirc {
             grid-area: ultimecirc;
             border: 1px solid black;
-        }
-
-        #pagina {
-            background-color: yellow;
             padding: 1em;
+            background-color: #323639;
         }
+*
 
         #contenitore {
             width: 100%;
@@ -57,9 +62,9 @@
         #categorie {
             border-radius: 0.5em;
             font-size: xx-large;
-            background-color: #EECD00;
-            padding: 0.3em;
-            margin-top: 0.5em;
+            background-color: white;
+            border-color: #EECD00;
+            text-align: center;
         }
 
         option {
@@ -67,52 +72,130 @@
         }
 
         .circ {
-            background-color: #EECD00;
+            background-color: white;
             display: grid;
-            width: auto;
+            width: 90%;
             height: auto;
+            margin: auto;
             grid-template-columns: auto 1fr;
             grid-template-rows: auto auto;
             grid-template-areas: "icone testo";
             align-items: center;
+            border-radius: 0.5em;
+        }
+
+        .circ:hover {
+            background-color: #c5aa00;
         }
 
         #icone {
             grid-area: icone;
+            padding: 1em;
         }
 
         #testo {
             grid-area: testo;
         }
+
+        #testo p,
+        #testo h4 {
+            margin: 0em;
+        }
     </style>
 </head>
 
-<body class="container" id="pagina">
-    <div class="circolari">circolari</div>
-    <div class="ultimecirc">
-        <div class="circ" width="50em">
-            <div id="icone">
-                <img src="pdf.png" width="50em">
-            </div>
-            <div id="testo">
-                <h4>Numero</h4>
-                <p>Descrizione</p>
-                <h4>Data</h4>
-                <p>Allegati</p>
+<body onload="carica()">
+    <div class="container" id="pagina">
+        <!--   CIRCOLARE ATTIVA   -->
+        <div class="circolari">
+            <embed src="file.pdf" type="application/pdf" width="100%" height="100%" />
+        </div>
+
+        <!--   CIRCOLARI   -->
+        <div class="ultimecirc">
+            <div class="circ" width="50em" onclick="aggiungi()">
+                <div id="icone">
+                    <img src="pdf.png" width="50em">
+                </div>
+                <div id="testo">
+                    <h4>CIRC500</h4>
+                    <p>Simulazione seconda prova scritta 5M1 5M2 7 maggio 2024.</p>
+                    <h4>03-05-2024</h4>
+                    <p>Tutto il personale</p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="categoria">
-        <select id="categorie" placeholder="Tipologia">
-            <option disabled selected hidden>Tipologia</option>
-            <option>Albo sindacale</option>
-            <option>Alunni</option>
-            <option>Docenti</option>
-            <option>Famiglie</option>
-            <option>Personale ATA</option>
-            <option>Per tutti</option>
-        </select>
+
+        <!--   CATEGORIE   -->
+        <div class="categoria">
+            <select id="categorie" placeholder="Tipologia">
+                <option disabled selected hidden>Tipologia</option>
+                <option onblu>Albo sindacale</option>
+                <option>Alunni</option>
+                <option>Docenti</option>
+                <option>Famiglie</option>
+                <option>Personale ATA</option>
+                <option>Per tutti</option>
+            </select>
+        </div>
     </div>
 </body>
+<script>
+    async function carica() {
+        let url = "http://10.1.0.52:8080/circolari";
+        let risposta = await fetch(url);
+        if (risposta.ok) {
+            let dati = await risposta.json();
+            for (let i = 0; i < dati.length; i++) {
+                let numero = dati[i].numero;
+                let nome = dati[i].nome;
+                let data = dati[i].data;
+                let tipologia = "";
+                if (dati[i].famiglia) {
+                    tipologia = + "famiglia";
+                }
+                if (dati[i].docenti) {
+                    if (tipologia == "") {
+                        tipologia += "docenti";
+                    } else {
+                        tipologia += ", docenti";
+                    }
+                }
+
+                if (dati[i].personale) {
+                    if (tipologia == "") {
+                        tipologia += "personale";
+                    } else {
+                        tipologia += ", personale";
+                    }
+                }
+
+                if (dati[i].alunni) {
+                    if (tipologia == "") {
+                        tipologia += "alunni";
+                    } else {
+                        tipologia += ", alunni";
+                    }
+                }
+
+                if (dati[i].albo_sindacale) {
+                    if (tipologia == "") {
+                        tipologia += "albo_sindacale";
+                    } else {
+                        tipologia += ", albo_sindacale";
+                    }
+                }
+
+                console.log("Numero: " + numero);
+                console.log("Nome: " + nome);
+                console.log("Data: " + data);
+                console.log("Tipologia: " + tipologia);
+                console.log("for for for for real real real");
+
+            }
+
+        }
+    }
+</script>
 
 </html>
