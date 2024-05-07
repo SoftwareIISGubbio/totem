@@ -21,8 +21,8 @@ public class OrarioManager {
         @RequestParam(required = false) String classe,
         @RequestParam(required = false) String professore,
         @RequestParam(required = false) String aula,
-        @RequestParam(required = false) String ora,
-        @RequestParam(required = false) String giorno
+        @RequestParam(required = false) Integer ora,
+        @RequestParam(required = false) Integer giorno
     ) {
         Orario o = new Orario();
         o.setClasse(classe);
