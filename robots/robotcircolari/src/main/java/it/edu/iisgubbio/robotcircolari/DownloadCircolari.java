@@ -10,6 +10,8 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 /****************************************************************************
  * Permette di scaricare le circolari presenti sul sito, archivandole tramite
@@ -22,6 +24,17 @@ public class DownloadCircolari {
 	static String url = "jdbc:mysql://localhost:3306/totem";
 	static String username = "root";
 	static String password = "";
+
+	private static boolean esiste(int n) throws SQLException {
+		String query="SELECT * FROM circolare WHERE numero="+n;
+		Connection connection = DriverManager.getConnection(url, username, password);
+		Statement connesso = connection.createStatement();
+		ResultSet risultato = connesso.executeQuery(query);
+		boolean esisateProssimo =  risultato.next();	
+		risultato.close();
+		connesso.close();
+		return esisateProssimo;
+	}
 
 	/************************************************************************
 	 * Main che permette di individuare la cartella dove sono salvati i file,
@@ -79,6 +92,7 @@ public class DownloadCircolari {
 		try (Connection connection = DriverManager.getConnection(url, username, password)) {
 
 			for(WebElement elem: elementi) {
+
 				// Prendo il nome della circolare
 				String titolo = elem.findElement( By.cssSelector("p") ).getText();
 
@@ -91,24 +105,31 @@ public class DownloadCircolari {
 
 				//Ottengo la data
 				WebElement data = elem.findElement(By.cssSelector("li.list-group-item strong"));
-				String data1= data.getText();
-				String[] dataGirata=data1.split("-");
-				String appoggio=dataGirata[0];
-				dataGirata[0]=dataGirata[2];
-				dataGirata[2]=appoggio;
-				String dataFinale = dataGirata[0]+dataGirata[1]+dataGirata[2];
+
 				//Ottengo la tipolgia
 				WebElement tipo = elem.findElement(By.cssSelector("li + li.list-group-item strong"));
-				int numero=444;
+				String query = "SELECT titolo FROM circolare";
 				Circolare nuova = new Circolare(titolo, linx, data.getText(), tipo.getText());
-				
-				String sql = "INSERT INTO circolare (titolo, link, numero, data, famiglia, docenti, personale, alunni, albo_sindacale) VALUES ("+"+ titolo"+",'" + linx + "'," + 444 + ",'" + dataFinale+ "'," + false + ","
-						+ false + "," + false + "," + false + "," + false + ")";
-				System.out.println(sql); 
+				System.out.println(tipo.getText());
 				Statement istruzione = connection.createStatement();
-	            // Esecuzione della query di inserimento
-	            istruzione.executeUpdate(sql);
-	            System.out.println("Record inserito correttamente!!!!!");
+				// Esecuzione della query di inserimento
+				////ahsdbcccccccisdcbsdicbdsicbdscbdsciusdbcidsucbsdiucbdsiucbdsciudsbciub
+				if(esiste(nuova.getNumero())) {
+					System.out.println("gia esiste");
+				}else {
+					if(nuova.getNumero()!=0) {
+						String sql = "INSERT INTO circolare (titolo, link, numero, data, famiglia, docenti, personale, alunni, albo_sindacale) VALUES ("+"\"" + nuova.getTitolo() + "\""
+								+",'" + nuova.getLink() + "'," + nuova.getNumero() + ",'" + nuova.getData()+ "'," + nuova.getFamiglia() + ","+ nuova.getDocenti() + ","+ nuova.getPersonale() + ","
+								+ nuova.getAlunni() + ","+ nuova.getAlboSindacale()+")";
+						istruzione.executeUpdate(sql);
+						System.out.println(nuova.getAlunni());
+						System.out.println(sql); 
+						System.out.println("Record inserito correttamente!!!!!");
+
+					}
+				}
+				//sncipdsucnsdpiucndsuc oic ndsoicndscdsncdsncldkscndslkcndslcnsdclndclkdnclsdcnslkdcndlkcndlcskn
+				// System.out.println(result);
 			} 
 		}
 		catch (Exception e) {
