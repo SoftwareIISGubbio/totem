@@ -79,6 +79,7 @@ public class DownloadCircolari {
 		try (Connection connection = DriverManager.getConnection(url, username, password)) {
 
 			for(WebElement elem: elementi) {
+				
 				// Prendo il nome della circolare
 				String titolo = elem.findElement( By.cssSelector("p") ).getText();
 
@@ -91,19 +92,13 @@ public class DownloadCircolari {
 
 				//Ottengo la data
 				WebElement data = elem.findElement(By.cssSelector("li.list-group-item strong"));
-				String data1= data.getText();
-				String[] dataGirata=data1.split("-");
-				String appoggio=dataGirata[0];
-				dataGirata[0]=dataGirata[2];
-				dataGirata[2]=appoggio;
-				String dataFinale = dataGirata[0]+dataGirata[1]+dataGirata[2];
+				
 				//Ottengo la tipolgia
 				WebElement tipo = elem.findElement(By.cssSelector("li + li.list-group-item strong"));
-				int numero=444;
 				Circolare nuova = new Circolare(titolo, linx, data.getText(), tipo.getText());
-				titolo = "\"" + titolo + "\"";;
-				String sql = "INSERT INTO circolare (titolo, link, numero, data, famiglia, docenti, personale, alunni, albo_sindacale) VALUES ("+titolo+",'" + linx + "'," + 444 + ",'" + dataFinale+ "'," + false + ","
-						+ false + "," + false + "," + false + "," + false + ")";
+				String sql = "INSERT INTO circolare (titolo, link, numero, data, famiglia, docenti, personale, alunni, albo_sindacale) VALUES ("+"\"" + nuova.getTitolo() + "\""
+				+",'" + nuova.getLink() + "'," + nuova.getNumero() + ",'" + nuova.getData()+ "'," + nuova.getFamiglia() + ","+ nuova.getDocenti() + ","+ nuova.getPersonale() + ","
+						+ nuova.getAlunni() + ","+ nuova.getAlboSindacale()+")";
 				System.out.println(sql); 
 				Statement istruzione = connection.createStatement();
 	            // Esecuzione della query di inserimento
