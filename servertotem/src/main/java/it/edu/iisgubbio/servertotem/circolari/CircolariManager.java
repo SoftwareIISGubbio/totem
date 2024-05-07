@@ -2,14 +2,17 @@ package it.edu.iisgubbio.servertotem.circolari;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+@CrossOrigin
 @RestController
 public class CircolariManager {
 
@@ -41,7 +44,28 @@ public class CircolariManager {
 	        Example<Circolari> example = Example.of(o);
 	        return repoCircolari.findAll( example );
 	    }
-	
-	
+	 
 
+	    @GetMapping("/Cerca")
+	    public List<Circolari> cercaCircolari(
+	            @RequestParam(required = false) Boolean docenti,
+	            @RequestParam(required = false) Boolean alunni,
+	            @RequestParam(required = false) Boolean personale,
+	            @RequestParam(required = false) Boolean famiglia,
+	            @RequestParam(required = false) Boolean albo_sindacale
+	        ) {
+	        Circolari c = new Circolari();
+	        c.setDocenti(docenti);
+	        c.setAlunni(alunni);
+	        c.setPersonale(personale);
+	        c.setFamiglia(famiglia);
+	        c.setAlbo_Sindacale(albo_sindacale);
+	        Example<Circolari> example = Example.of(c);
+	        return repoCircolari.findAll( example );
+	    }
+
+
+
+
+	
 }
