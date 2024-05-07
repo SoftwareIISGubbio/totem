@@ -52,13 +52,15 @@ public class Circolare {
 	   			setAlboSindacale(true);
 	   			break;
 	   		
-	   		case "tutti": 
+	   		case "tutto il personale":
+	   			System.out.println("ok");
 	   			setPersonale(true);
 	   			setAlboSindacale(true);
 	    		setAlunni(true);
 	   			setDocenti(true);
 	    		setFamiglia(true);
-	   			break;
+	    		System.out.print("sdkcbu");	   
+	    		break;
         }
 	        }
         
@@ -78,12 +80,12 @@ public class Circolare {
         }
     }
     
-
     /************************************************************************
      * Metodo di utilità per costruire un Matcher
      *
      * @param nomeCompleto il nome completo del file
      ***********************************************************************/
+    
     private static Matcher patMat(String nomeCompleto) {
         Pattern r = Pattern.compile("^CIRC([0-9]+) *(.*)$");
 

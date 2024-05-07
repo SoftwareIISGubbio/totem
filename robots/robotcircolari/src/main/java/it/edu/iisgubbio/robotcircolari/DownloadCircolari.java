@@ -22,6 +22,11 @@ public class DownloadCircolari {
 	static String url = "jdbc:mysql://10.1.0.52:3306/totem";
 	static String username = "totem";
 	static String password = "totem";
+//
+//	static boolean esiste(int numero) {
+//		
+//	}
+//	
 
 	/************************************************************************
 	 * Main che permette di individuare la cartella dove sono salvati i file,
@@ -81,7 +86,7 @@ public class DownloadCircolari {
 			for(WebElement elem: elementi) {
 				// Prendo il nome della circolare
 				String titolo = elem.findElement( By.cssSelector("p") ).getText();
-
+							
 				// Scarto eventuali allegati che non devono essere scaricati
 				// Ottengo il link
 				WebElement link = elem.findElement(By.cssSelector("div.media-right a.link-to-file"));
@@ -91,17 +96,22 @@ public class DownloadCircolari {
 
 				//Ottengo la data
 				WebElement data = elem.findElement(By.cssSelector("li.list-group-item strong"));
-
+				
 				//Ottengo la tipolgia
 				WebElement tipo = elem.findElement(By.cssSelector("li + li.list-group-item strong"));
-
 				Circolare nuova = new Circolare(titolo, linx, data.getText(), tipo.getText());
-				
-				String sql = "INSERT INTO circolari (nome,link,numero,data,famiglia,docenti,personale,alunni,albo_sindacale) VALUES ()";
-	            Statement istruzione = connection.createStatement();
-	            // Esecuzione della query di inserimento
-	            istruzione.executeUpdate(sql);
-	            System.out.println("Record inserito correttamente!!");
+				System.out.println(tipo.getText());
+				if(nuova.getNumero()!=0) {
+					String sql = "INSERT INTO circolari (nome, link, numero, data, famiglia, docenti, personale, alunni, albo_sindacale) VALUES ("+"\"" + nuova.getTitolo() + "\""
+							+",'" + nuova.getLink() + "'," + nuova.getNumero() + ",'" + nuova.getData()+ "'," + nuova.getFamiglia() + ","+ nuova.getDocenti() + ","+ nuova.getPersonale() + ","
+									+ nuova.getAlunni() + ","+ nuova.getAlboSindacale()+")";
+							System.out.println(nuova.getAlunni());
+							System.out.println(sql); 
+							Statement istruzione = connection.createStatement();
+				            // Esecuzione della query di inserimento
+				            istruzione.executeUpdate(sql);
+				            System.out.println("Record inserito correttamente!!!!!");
+				}
 			} 
 		}
 		catch (Exception e) {

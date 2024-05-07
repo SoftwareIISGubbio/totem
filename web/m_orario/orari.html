@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orari</title>
+</head>
+
+<style>
+    div {
+        border: black solid 0.05em;
+    }
+
+    .griglia {
+        margin: 0;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 2fr 1fr 4fr;
+        grid-template-rows: 1fr 8fr;
+        grid-template-areas:
+            "prof classi orario"
+            "prof classi materie"
+
+    }
+
+    .professori {
+        grid-area: prof;
+        color: #b8860b;
+        font-size: 25px;
+        text-align: center;
+        background-color: yellow;
+    }
+
+    .orario {
+        grid-area: orario;
+        color: #b8860b;
+        font-size: 25px;
+        text-align: center;
+        background-color: yellow;
+        line-height: 2.5em;
+
+    }
+
+    .materie {
+        grid-area: materie;
+        color: #b8860b;
+        font-size: 25px;
+        text-align: center;
+        background-color: yellow;
+
+
+    }
+
+    .classi {
+        grid-area: classi;
+        color: #b8860b;
+        font-size: 25px;
+        text-align: center;
+        background-color: yellow;
+    }
+</style>
+<script>
+    async function recuperaInformazioni() {
+        let risposta = await fetch("http://10.1.0.52:8080/orario");
+        let orario = await risposta.json();
+        console.log(orario);
+
+        document.getElementById("tabella").innerHTML = "<table><tr> <th> </th> <th>Lunedì</th> <th>Martedì</th> <th>Mercoledì</th> <th>Giovedì</th> <th>Venerdì</th> </tr> <tr><th>08:00</th></tr><tr><th>08:55</th></tr><tr><th>10:00</th></tr><tr><th>10:55</th></tr><tr><th>11:55</th></tr><tr><th>12:45</th></tr><tr><th>13:35</th></tr><tr><th>14:25</th></tr><tr><th>15:20</th></tr></table>";
+    }
+        async function combo() {
+
+            let elemento;
+            let comboBox = document.getElementById("prof");
+
+            const url = "http://10.1.0.52:8080/professori";
+            console.log(url);
+            const risposta = await fetch(url);
+            const elenco = await risposta.json();
+            comboBox.innerText = " ";
+            for (let i = 0; i < elenco.length; i++) {
+                elemento = document.createElement("option");
+                elemento.innerText = elenco[i];
+                comboBox.appendChild(elemento);
+            }
+        }
+</script>
+
+<body class="griglia" onload="combo()">
+    <div class="professori">
+        <p>PROF</p>
+        <select id="prof" >
+            <option></option>
+        </select>
+    </div>
+
+    <div class="classi">CLASSI</div>
+    <div class="orario">ORARIO:</div>
+    <div class="materie">
+        <p>MATERIE</p>
+        <div id="tabella">
+            <table>
+                <tr>
+                    <th> </th>
+                    <th>Lunedì</th>
+                    <th>Martedì</th>
+                    <th>Mercoledì</th>
+                    <th>Giovedì</th>
+                    <th>Venerdì</th>
+                </tr>
+                <tr>
+                    <th>08:00</th>
+                </tr>
+                <tr>
+                    <th>08:55</th>
+                </tr>
+                <tr>
+                    <th>10:00</th>
+                </tr>
+                <tr>
+                    <th>10:55</th>
+                </tr>
+                <tr>
+                    <th>11:55</th>
+                </tr>
+                <tr>
+                    <th>12:45</th>
+                </tr>
+                <tr>
+                    <th>13:35</th>
+                </tr>
+                <tr>
+                    <th>14:25</th>
+                </tr>
+                <tr>
+                    <th>15:20</th>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
