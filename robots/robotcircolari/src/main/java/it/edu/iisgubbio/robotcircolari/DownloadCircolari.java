@@ -96,14 +96,18 @@ public class DownloadCircolari {
 				//Ottengo la tipolgia
 				WebElement tipo = elem.findElement(By.cssSelector("li + li.list-group-item strong"));
 				Circolare nuova = new Circolare(titolo, linx, data.getText(), tipo.getText());
-				String sql = "INSERT INTO circolare (titolo, link, numero, data, famiglia, docenti, personale, alunni, albo_sindacale) VALUES ("+"\"" + nuova.getTitolo() + "\""
-				+",'" + nuova.getLink() + "'," + nuova.getNumero() + ",'" + nuova.getData()+ "'," + nuova.getFamiglia() + ","+ nuova.getDocenti() + ","+ nuova.getPersonale() + ","
-						+ nuova.getAlunni() + ","+ nuova.getAlboSindacale()+")";
-				System.out.println(sql); 
-				Statement istruzione = connection.createStatement();
-	            // Esecuzione della query di inserimento
-	            istruzione.executeUpdate(sql);
-	            System.out.println("Record inserito correttamente!!!!!");
+				System.out.println(tipo.getText());
+				if(nuova.getNumero()!=0) {
+					String sql = "INSERT INTO circolare (titolo, link, numero, data, famiglia, docenti, personale, alunni, albo_sindacale) VALUES ("+"\"" + nuova.getTitolo() + "\""
+							+",'" + nuova.getLink() + "'," + nuova.getNumero() + ",'" + nuova.getData()+ "'," + nuova.getFamiglia() + ","+ nuova.getDocenti() + ","+ nuova.getPersonale() + ","
+									+ nuova.getAlunni() + ","+ nuova.getAlboSindacale()+")";
+							System.out.println(nuova.getAlunni());
+							System.out.println(sql); 
+							Statement istruzione = connection.createStatement();
+				            // Esecuzione della query di inserimento
+				            istruzione.executeUpdate(sql);
+				            System.out.println("Record inserito correttamente!!!!!");
+				}
 			} 
 		}
 		catch (Exception e) {

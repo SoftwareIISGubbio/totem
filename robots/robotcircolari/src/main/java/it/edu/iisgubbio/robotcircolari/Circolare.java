@@ -59,7 +59,8 @@ public class Circolare {
 	    		setAlunni(true);
 	   			setDocenti(true);
 	    		setFamiglia(true);
-	   			break;
+	    		System.out.print("sdkcbu");	   
+	    		break;
         }
 	        }
         
