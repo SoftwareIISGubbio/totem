@@ -52,13 +52,15 @@ public class Circolare {
 	   			setAlboSindacale(true);
 	   			break;
 	   		
-	   		case "tutti": 
+	   		case "tutto il personale":
+	   			System.out.println("ok");
 	   			setPersonale(true);
 	   			setAlboSindacale(true);
 	    		setAlunni(true);
 	   			setDocenti(true);
 	    		setFamiglia(true);
-	   			break;
+	    		System.out.print("sdkcbu");	   
+	    		break;
         }
 	        }
         
