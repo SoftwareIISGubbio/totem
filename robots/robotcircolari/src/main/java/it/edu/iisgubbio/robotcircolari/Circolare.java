@@ -78,12 +78,12 @@ public class Circolare {
         }
     }
     
-
     /************************************************************************
      * Metodo di utilità per costruire un Matcher
      *
      * @param nomeCompleto il nome completo del file
      ***********************************************************************/
+    
     private static Matcher patMat(String nomeCompleto) {
         Pattern r = Pattern.compile("^CIRC([0-9]+) *(.*)$");
 

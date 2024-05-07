@@ -19,9 +19,9 @@ import java.sql.Statement;
  * @author Filippo Nardoni
  ***************************************************************************/
 public class DownloadCircolari {
-	static String url = "jdbc:mysql://10.1.0.52:3306/totem";
-	static String username = "totem";
-	static String password = "totem";
+	static String url = "jdbc:mysql://localhost:3306/totem";
+	static String username = "root";
+	static String password = "";
 
 	/************************************************************************
 	 * Main che permette di individuare la cartella dove sono salvati i file,
@@ -91,17 +91,24 @@ public class DownloadCircolari {
 
 				//Ottengo la data
 				WebElement data = elem.findElement(By.cssSelector("li.list-group-item strong"));
-
+				String data1= data.getText();
+				String[] dataGirata=data1.split("-");
+				String appoggio=dataGirata[0];
+				dataGirata[0]=dataGirata[2];
+				dataGirata[2]=appoggio;
+				String dataFinale = dataGirata[0]+dataGirata[1]+dataGirata[2];
 				//Ottengo la tipolgia
 				WebElement tipo = elem.findElement(By.cssSelector("li + li.list-group-item strong"));
-
+				int numero=444;
 				Circolare nuova = new Circolare(titolo, linx, data.getText(), tipo.getText());
 				
-				String sql = "INSERT INTO circolari (nome,link,numero,data,famiglia,docenti,personale,alunni,albo_sindacale) VALUES ()";
-	            Statement istruzione = connection.createStatement();
+				String sql = "INSERT INTO circolare (titolo, link, numero, data, famiglia, docenti, personale, alunni, albo_sindacale) VALUES ("+"+ titolo"+",'" + linx + "'," + 444 + ",'" + dataFinale+ "'," + false + ","
+						+ false + "," + false + "," + false + "," + false + ")";
+				System.out.println(sql); 
+				Statement istruzione = connection.createStatement();
 	            // Esecuzione della query di inserimento
 	            istruzione.executeUpdate(sql);
-	            System.out.println("Record inserito correttamente!!");
+	            System.out.println("Record inserito correttamente!!!!!");
 			} 
 		}
 		catch (Exception e) {
