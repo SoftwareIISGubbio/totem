@@ -101,8 +101,8 @@ public class DownloadCircolari {
 				WebElement tipo = elem.findElement(By.cssSelector("li + li.list-group-item strong"));
 				int numero=444;
 				Circolare nuova = new Circolare(titolo, linx, data.getText(), tipo.getText());
-				
-				String sql = "INSERT INTO circolare (titolo, link, numero, data, famiglia, docenti, personale, alunni, albo_sindacale) VALUES ("+"+ titolo"+",'" + linx + "'," + 444 + ",'" + dataFinale+ "'," + false + ","
+				titolo = "\"" + titolo + "\"";;
+				String sql = "INSERT INTO circolare (titolo, link, numero, data, famiglia, docenti, personale, alunni, albo_sindacale) VALUES ("+titolo+",'" + linx + "'," + 444 + ",'" + dataFinale+ "'," + false + ","
 						+ false + "," + false + "," + false + "," + false + ")";
 				System.out.println(sql); 
 				Statement istruzione = connection.createStatement();
