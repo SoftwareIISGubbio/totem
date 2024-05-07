@@ -52,7 +52,8 @@ public class Circolare {
 	   			setAlboSindacale(true);
 	   			break;
 	   		
-	   		case "tutti": 
+	   		case "tutto il personale":
+	   			System.out.println("ok");
 	   			setPersonale(true);
 	   			setAlboSindacale(true);
 	    		setAlunni(true);
