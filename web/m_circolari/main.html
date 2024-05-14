@@ -59,12 +59,35 @@
             width: 40%;
         }
 
-        #categorie {
+        .categoria select {
             border-radius: 0.5em;
             font-size: xx-large;
             background-color: white;
             border-color: #EECD00;
             text-align: center;
+        }
+
+        .categoria #ricCategoria {
+            display: none;
+        }
+
+        .categoria input {
+            border-radius: 0.5em;
+            font-size: xx-large;
+            background-color: white;
+            border-color: #EECD00;
+            text-align: center;
+            display: none;
+            width: 50%;
+        }
+
+        .categoria #cercaNum {
+            border-radius: 0.5em;
+            font-size: xx-large;
+            background-color: white;
+            border-color: #EECD00;
+            text-align: center;
+            display: none;
         }
 
         option {
@@ -102,6 +125,11 @@
         #testo h4 {
             margin: 0em;
         }
+
+        .allineaVerticale {
+            display: flex;
+            align-items: center;
+        }
     </style>
 </head>
 
@@ -129,9 +157,16 @@
             -->
         </div>
 
-        <!--   CATEGORIE   -->
+        <!--   ricCaategoria   -->
         <div class="categoria">
-            <select id="categorie" placeholder="Tipologia" onchange="carica()">
+            <select id="ricerca" onchange="ricerca()">
+                <option disabled selected hidden>Ricerca per</option>
+                <option value="ricCategoria">Categoria</option>
+                <option value="ricNumero">Numero</option>
+            </select>
+
+            <select id="ricCategoria" placeholder="Tipologia" onchange="carica()">
+                <option disabled selected hidden>Categoria</option>
                 <option value="albo_sindacale">Albo sindacale</option>
                 <option value="alunni">Alunni</option>
                 <option value="docenti">Docenti</option>
@@ -139,20 +174,46 @@
                 <option value="personale_ata">Personale ATA</option>
                 <option value="per_tutti">Per tutti</option>
             </select>
-            <!--
-            <select class="ricerca">
-                <option>Categoria</option>
-                <option>Numero</option>
-                <option>Data</option>
-            </select>
-            -->
+            <div class="allineaVerticale">
+                <input type="number" min="1" placeholder="Numero cirolare..." id="ricNumero" name="ricNumero">
+                <button id="cercaNum">Cerca</button>
+            </div>
+
         </div>
     </div>
 </body>
 <script>
 
+    function ricerca() {
+        var ricercaSelezionata = document.getElementById("ricerca").value;
+        switch (ricercaSelezionata) {
+            case "ricCategoria":
+                ricCategoria();
+                break;
+            case "ricNumero":
+                ricNumero();
+                break;
+        }
+    }
+
+    function ricCategoria() {
+        var select = document.getElementById("ricCategoria");
+        document.getElementById("ricNumero").style.display = "none";
+        document.getElementById("cercaNum").style.display = "none"
+        console.log("funzione categorie");
+        select.style.display = "unset";
+
+    }
+    function ricNumero() {
+        var select = document.getElementById("ricNumero");
+        document.getElementById("ricCategoria").style.display = "none";
+        document.getElementById("cercaNum").style.display = "unset";
+        console.log("funzione numero");
+        select.style.display = "unset";
+    }
+
     function carica() {
-        var categoriaSelezionata = document.getElementById("categorie").value;
+        var categoriaSelezionata = document.getElementById("ricCategoria").value;
         switch (categoriaSelezionata) {
             case "albo_sindacale":
                 funzioneAlboSindacale();
@@ -284,7 +345,7 @@
     async function caricda() {
         let url = "http://10.1.0.52:8080/circolari";
         let risposta = await fetch(url);
-        var categoriaSelezionata = document.getElementById("categorie").value;
+        var categoriaSelezionata = document.getElementById("ricCategoria").value;
         // Qui puoi fare ciò che desideri con la categoria selezionata
         console.log("Categoria selezionata:", categoriaSelezionata);
         if (risposta.ok) {
