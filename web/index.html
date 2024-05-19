@@ -31,13 +31,22 @@
         #meteo  { grid-column: 3/4; grid-row: 2/4; background: rgb(129, 211, 255)}
         #slide  { grid-column: 1/2; grid-row: 3/4; background: rgb(55, 238, 42)}
         #bot  { grid-column: 5/7; grid-row: 3/5; background: rgb(221, 221, 221)}
+        #orologio  { grid-column: 4/5; grid-row: 1/2; background: rgb(221, 221, 221)}
     </style>
     <script src="m_slideshow/script.js"></script>
     <script src="m_meteo/script.js"></script>
+    <script src="m_orologio/script.js"></script>
+    <link rel="stylesheet" href="m_orologio/style.css">
+    <script src="m_circolari/script.js"></script>
+    <link rel="stylesheet" href="m_circolari/style.css">
+    <script src="m_orario/script.js"></script>
+    <link rel="stylesheet" href="m_orario/style.css">
+    <script src="m_bot/script.js"></script>
+    <link rel="stylesheet" href="m_bot/style.css">
     <script>
         "use strict";
         function inizializzaPagina(){
-            for (let i=0; i<14; i++){
+            for (let i=0; i<13; i++){
                 let div = document.createElement("div");
                 div.style.backgroundImage = "url(foto/"+(i<10 ? "0"+i : i)+".jpeg)";
                 div.className = "foto";
@@ -45,6 +54,10 @@
             }
             m_slideshow("slide");
             m_meteo("meteo");
+            m_orologio("orologio");
+            m_circolari("circolari");
+            m_orario("orario");
+            m_bot("bot");
         }
     </script>
 </head>
@@ -55,5 +68,6 @@
     <div id="meteo">meteo</div>
     <div id="slide">2030</div>
     <div id="bot">bot</div>
+    <div id="orologio">bot</div>
 </body>
 </html>
