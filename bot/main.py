@@ -1,45 +1,80 @@
-import telebot, pathlib, os, random, mysql.connector
+import telebot
+import pathlib
+import os
+import csv
+import mysql.connector
 from PIL import Image
-from datetime import date
+from datetime import datetime
 
 API_TOKEN = "6693052658:AAHY8dHg8j2lip9tKWD8TmUL47R2WMgN8yg"
 bot = telebot.TeleBot(API_TOKEN)
 print("bot online")
 
-# __ help __
-@bot.message_handler(commands=['aiuto', 'help'])
+# Load whitelist
+whitelist = set()
+with open('totem/bot/whitelist.csv', newline='') as csvfile:
+    reader = csv.reader(csvfile)
+    for row in reader:
+        whitelist.add(row[0])
+
+def is_whitelisted(username):
+    return username in whitelist
+
+# __ help __    
+@bot.message_handler(commands=['aiuto', 'help', 'start'])
 def help_command(message):
-    bot.send_message(message.chat.id, ("Ciao {0}, chat {1}").format(message.from_user.username, message.chat.id))
+    bot.send_message(message.chat.id, ("Salve {0}, invia un immagine con una descrizione ed essa verrà visualizzata a scuola!").format(message.from_user.username))
 
 @bot.message_handler(content_types=['photo'])
 def scaricoImmagine(message):
 
-    # prendo l'ultima immagine presente nella lista del server
-    file_info = bot.get_file(message.photo[len(message.photo) - 1].file_id)
-    downloaded_file = bot.download_file(file_info.file_path)
-    nomeFile = (file_info.file_path).split("/")
+    if not is_whitelisted(message.from_user.username):
+        bot.send_message(message.chat.id, "Non sei autorizzato ad utilizzare questo bot.")
+        return
 
-    id = file_info.file_unique_id
-    username = message.from_user.username
-    data =  date.today()
-    # .strftime("%d/%m/%Y")
-    caption = message.caption
+    try:
+        # prendo l'ultima immagine presente nella lista del server
+        file_info = bot.get_file(message.photo[len(message.photo) - 1].file_id)
+        downloaded_file = bot.download_file(file_info.file_path)
+        nomeFile = (file_info.file_path).split("/")
 
-    db = mysql.connector.connect(
-        host = "localhost",
-        user = "root",
-        password = "",
-        database = "totem"
-    )
+        tag = file_info.file_unique_id
+        username = message.from_user.username
+        data =  datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        caption = message.caption
 
-    cursor = db.cursor()
-    cursor.execute("INSERT INTO immagini VALUES ('{0}','{1}','{2}','{3}')".format(id, username, data, caption))
+        db = mysql.connector.connect(
+            host = "10.1.0.52",
+            user = "totem",
+            password = "totem",
+            database = "totem"
+        )
 
-    with open("immagini/current.jpg", 'wb') as new_file:
-        new_file.write(downloaded_file)
+        cursor = db.cursor()
+        cursor.execute("INSERT INTO immagini (tag, username, data, descrizione) VALUES ('{0}','{1}','{2}','{3}')".format(tag, username, data, caption))
+        db.commit() # salvatagggio
 
-    with open("immagini/"+nomeFile[len(nomeFile)-1], 'wb') as new_file:
-        new_file.write(downloaded_file)
+        with open("totem/bot/immagini/"+tag+".jpg", 'wb') as new_file:
+            new_file.write(downloaded_file)
 
+        bot.send_message(message.chat.id, "Immagine salvata correttamente!")
+        print(username+" ha caricato un immagine.")
+
+    except Exception as e:
+        print(e)
+        bot.send_message(message.chat.id, "Si è verificato un errore durante il salvataggio dell'immagine.")
+        db.rollback()  # Rollback if there's an error
+
+    finally:
+        cursor.close()
+        db.close()
 
 bot.infinity_polling()
+
+
+"""
+    # nomeFile[len(nomeFile)-1] ultimo file
+only pyTelegramBotAPI & telegram & pip install --upgrade python-telegram-bot
+pip install mysql-connector-python 
+
+"""
