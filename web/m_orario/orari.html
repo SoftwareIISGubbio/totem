@@ -12,19 +12,19 @@
         border: black solid 0.05em;
     }
 
-    .griglia {
+    .orario_griglia {
         margin: 0;
         height: 100vh;
         display: grid;
-        grid-template-columns: 2fr 1fr 4fr;
+        grid-template-columns: 1fr 2fr;
         grid-template-rows: 1fr 8fr;
         grid-template-areas:
-            "prof classi orario"
-            "prof classi materie"
+            "prof  orario"
+            "prof  materie"
 
     }
 
-    .professori {
+    .orario_professori {
         grid-area: prof;
         color: #b8860b;
         font-size: 25px;
@@ -32,7 +32,7 @@
         background-color: yellow;
     }
 
-    .orario {
+    .orario_orario {
         grid-area: orario;
         color: #b8860b;
         font-size: 25px;
@@ -42,7 +42,7 @@
 
     }
 
-    .materie {
+    .orario_materie {
         grid-area: materie;
         color: #b8860b;
         font-size: 25px;
@@ -52,75 +52,123 @@
 
     }
 
-    .classi {
+    .orario_classi {
         grid-area: classi;
         color: #b8860b;
         font-size: 25px;
         text-align: center;
         background-color: yellow;
     }
+
+    .table {
+        border: 1 solid black;
+    }
 </style>
 <script>
+    function clearTableCells() {
+        const table = document.getElementById('tabella');
+        const cells = table.getElementsByTagName('td');
+        for (let i = 0; i < cells.length; i++) {
+            cells[i].innerText = '--';
+        }
+    }
     async function recuperaInformazioni() {
         let risposta = await fetch("http://10.1.0.52:8080/orario");
         let orario = await risposta.json();
         console.log(orario);
-
-        document.getElementById("tabella").innerHTML = "<table><tr> <th> </th> <th>Lunedì</th> <th>Martedì</th> <th>Mercoledì</th> <th>Giovedì</th> <th>Venerdì</th> </tr> <tr><th>08:00</th></tr><tr><th>08:55</th></tr><tr><th>10:00</th></tr><tr><th>10:55</th></tr><tr><th>11:55</th></tr><tr><th>12:45</th></tr><tr><th>13:35</th></tr><tr><th>14:25</th></tr><tr><th>15:20</th></tr></table>";
     }
-        async function combo() {
+    async function Orario_combo() {
 
-            let elemento;
-            let comboBox = document.getElementById("prof");
+        let elemento;
+        let comboBox = document.getElementById("prof");
 
-            const url = "http://10.1.0.52:8080/professori";
-            console.log(url);
-            const risposta = await fetch(url);
-            const elenco = await risposta.json();
-            comboBox.innerText = " ";
-            for (let i = 0; i < elenco.length; i++) {
-                elemento = document.createElement("option");
-                elemento.innerText = elenco[i];
-                comboBox.appendChild(elemento);
-            }
+        const url = "http://10.1.0.52:8080/professori";
+        console.log(url);
+        const risposta = await fetch(url);
+        const elenco = await risposta.json();
+        for (let i = 0; i < elenco.length; i++) {
+            elemento = document.createElement("option");
+            elemento.innerText = elenco[i];
+            comboBox.appendChild(elemento);
         }
+    }
 
-        async function recuperoOrario(){
-            let elemento;
-            
-            let comboBox = document.getElementById("prof");
-            let nome=comboBox.value;
-            console.log(nome);
-            const url = "http://10.1.0.52:8080/orario?professore="+nome;
-            console.log(url);
-            const risposta = await fetch(url);
-            const elenco = await risposta.json();
-            console.log(elenco);
-            
-            for(i=0;i<elenco.length; i++){
-               // console.log(elenco[0].giorno);
-                let casella="c"+elenco[i].giorno+elenco[i].ora;
-                console.log(casella);
-                let cella=document.getElementById(casella);
-               cella.innerText=elenco[i].classe;
-            }
+    async function recuperoOrario() {
+        let elemento;
+
+        let comboBox = document.getElementById("prof");
+        let nome = comboBox.value;
+        console.log(nome);
+        const url = "http://10.1.0.52:8080/orario?professore=" + nome;
+        console.log(url);
+        const risposta = await fetch(url);
+        const elenco = await risposta.json();
+        console.log(elenco);
+        clearTableCells();
+        for (i = 0; i < elenco.length; i++) {
+            let casella = "c" + elenco[i].giorno + elenco[i].ora;
+            console.log(casella);
+            let cella = document.getElementById(casella);
+
+            cella.innerText = elenco[i].classe;
         }
+    }
+    async function OrarioClassi_combo() {
+
+        let elemento;
+        let comboBox = document.getElementById("classi");
+
+        const url = "http://10.1.0.52:8080/classi";
+        console.log(url);
+        const risposta = await fetch(url);
+        const elenco = await risposta.json();
+        for (let i = 0; i < elenco.length; i++) {
+
+            console.log(elenco[i]);
+            elemento = document.createElement("option");
+            elemento.innerText = elenco[i];
+            comboBox.appendChild(elemento);
+        }
+    }
+    async function recuperoOrarioClassi() {
+        let elemento;
+
+        let comboBox = document.getElementById("classi");
+        let classe = comboBox.value;
+        console.log(classe);
+        const url = "http://10.1.0.52:8080/orario?classe=" + classe;
+        console.log(url);
+        const risposta = await fetch(url);
+        const elenco = await risposta.json();
+        console.log(elenco);
+
+        for (i = 0; i < elenco.length; i++) {
+            let casella = "c" + elenco[i].giorno + elenco[i].ora;
+            console.log(casella);
+            let cella = document.getElementById(casella);
+            cella.innerText = "";
+            cella.innerText = elenco[i].professore;
+
+        }
+    }
 </script>
 
-<body class="griglia" onload="combo()">
-    <div class="professori">
-        <p>PROF</p>
+<body class="orario_griglia" onload="Orario_combo();OrarioClassi_combo()">
+    <div class="orario_professori">
+        <p>Prof</p>
         <select id="prof" onchange="recuperoOrario()">
+            <option></option>
+        </select>
+        <p>Classi</p>
+        <select id="classi" onchange="recuperoOrarioClassi()">
             <option></option>
         </select>
     </div>
 
-    <div class="classi">CLASSI</div>
-    <div class="orario">ORARIO:</div>
-    <div class="materie">
-        <p>MATERIE</p>
+    <div class="orario_orario">ORARIO:</div>
+    <div class="orario_materie">
         <div id="tabella">
-            <table border="1">
+            <table>
                 <tr>
                     <th> </th>
                     <th>Lunedì</th>
