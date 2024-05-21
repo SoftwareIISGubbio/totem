@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>Circolari</title>
     <style>
         body {
             margin: 0em;
         }
 
-        .container {
+        .pagina {
             display: grid;
             width: 100%;
             height: 100vh;
@@ -22,6 +23,7 @@
         }
 
         .circolari {
+            background-color: green;
             grid-area: circolari;
             border: 1px solid black;
         }
@@ -36,22 +38,12 @@
             place-items: center;
         }
 
-        #ultimecirc {
+        #rispostaRic {
             grid-area: ultimecirc;
             border: 1px solid black;
             padding: 1em;
             background-color: #323639;
             overflow-y: auto;
-        }
-
-        #contenitore {
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 2em;
-        }
-
-        table {
-            width: 100%;
         }
 
         #lista {
@@ -125,7 +117,6 @@
         #testo h4 {
             margin: 0em;
         }
-
         .allineaVerticale {
             display: flex;
             align-items: center;
@@ -134,30 +125,17 @@
 </head>
 
 <body>
-    <div class="container" id="pagina">
+    <div class="pagina" id="pagina">
         <!--   CIRCOLARE ATTIVA   -->
         <div class="circolari">
-            <embed src="file.pdf" type="application/pdf" width="100%" height="100%" />
+            <iframe src="file.pdf" width="100%" height="100%" id="circolareAttiva"></iframe>
         </div>
 
         <!--   CIRCOLARI   -->
-        <div id="ultimecirc">
-            <!--
-            <div class="circ" width="50em" onclick="aggiungi()">
-                <div id="icone">
-                    <img src="pdf.png" width="50em">
-                </div>
-                <div id="testo">
-                    <h4>CIRC500</h4>
-                    <p>Simulazione seconda prova scritta 5M1 5M2 7 maggio 2024.</p>
-                    <h4>03-05-2024</h4>
-                    <p>Tutto il personale</p>
-                </div>
-            </div>
-            -->
+        <div id="rispostaRic">
         </div>
 
-        <!--   ricCaategoria   -->
+        <!--   ricCategoria   -->
         <div class="categoria">
             <select id="ricerca" onchange="ricerca()">
                 <option disabled selected hidden>Ricerca per</option>
@@ -176,13 +154,50 @@
             </select>
             <div class="allineaVerticale">
                 <input type="number" min="1" placeholder="Numero cirolare..." id="ricNumero" name="ricNumero">
-                <button id="cercaNum">Cerca</button>
+                <button id="cercaNum" onclick="cercaID()">Cerca</button>
             </div>
 
         </div>
     </div>
 </body>
 <script>
+
+    async function cercaID(){
+        let url = "http://10.1.0.52:8080/circolare/" + document.getElementById("ricNumero").value;
+        let risposta = await fetch(url);
+        if(risposta.ok){
+            let dati = await risposta.json();
+            var divDestinazione = document.getElementById("rispostaRic");
+                divDestinazione.innerHTML = "";
+            for (let i = 0; i < dati.length; i++) {
+                let numero = dati.numero;
+                let titolo = dati.nome;
+                let data = dati.data;
+                // Seleziona il div di destinazione
+                
+
+                // Crea un nuovo elemento div
+                var nuovoDiv = document.createElement("div");
+                nuovoDiv.className = "circ";
+                nuovoDiv.setAttribute("width", "50em");
+                nuovoDiv.setAttribute("onclick", "aggiungi('" + dati.link + "')"); 
+
+                // Contenuto del nuovo div
+                nuovoDiv.innerHTML = `
+                    <div id="icone">
+                        <img src="pdf.png" width="50em">
+                    </div>
+                    <div id="testo">
+                        <h4>CIRC` + numero + `</h4>
+                        <p>` + titolo + `</p>
+                        <h4>` + data + `</h4>
+                    </div>
+                `;
+                // Aggiungi il nuovo div al div di destinazione
+                divDestinazione.appendChild(nuovoDiv);
+            }
+        }
+    }
 
     function ricerca() {
         var ricercaSelezionata = document.getElementById("ricerca").value;
@@ -244,7 +259,36 @@
         let risposta = await fetch(url);
         if (risposta.ok) {
             let dati = await risposta.json();
-            console.log(dati);
+            var divDestinazione = document.getElementById("rispostaRic");
+                divDestinazione.innerHTML = "";
+            for (let i = 0; i < dati.length; i++) {
+                let numero = dati[i].numero;
+                let titolo = dati[i].nome;
+                let data = dati[i].data;
+                // Seleziona il div di destinazione
+                
+
+                // Crea un nuovo elemento div
+                var nuovoDiv = document.createElement("div");
+                nuovoDiv.className = "circ";
+                nuovoDiv.setAttribute("width", "50em");
+                console.log(dati[i].link);
+                nuovoDiv.setAttribute("onclick", "aggiungi('" + dati[i].link + "')"); 
+
+                // Contenuto del nuovo div
+                nuovoDiv.innerHTML = `
+                    <div id="icone">
+                        <img src="pdf.png" width="50em">
+                    </div>
+                    <div id="testo">
+                        <h4>CIRC` + numero + `</h4>
+                        <p>` + titolo + `</p>
+                        <h4>` + data + `</h4>
+                    </div>
+                `;
+                // Aggiungi il nuovo div al div di destinazione
+                divDestinazione.appendChild(nuovoDiv);
+            }
         }
 
     }
@@ -256,7 +300,36 @@
         let risposta = await fetch(url);
         if (risposta.ok) {
             let dati = await risposta.json();
-            console.log(dati);
+            var divDestinazione = document.getElementById("rispostaRic");
+                divDestinazione.innerHTML = "";
+            for (let i = 0; i < dati.length; i++) {
+                let numero = dati[i].numero;
+                let titolo = dati[i].nome;
+                let data = dati[i].data;
+                // Seleziona il div di destinazione
+                
+
+                // Crea un nuovo elemento div
+                var nuovoDiv = document.createElement("div");
+                nuovoDiv.className = "circ";
+                nuovoDiv.setAttribute("width", "50em");
+                console.log(dati[i].link);
+                nuovoDiv.setAttribute("onclick", "aggiungi('" + dati[i].link + "')"); 
+
+                // Contenuto del nuovo div
+                nuovoDiv.innerHTML = `
+                    <div id="icone">
+                        <img src="pdf.png" width="50em">
+                    </div>
+                    <div id="testo">
+                        <h4>CIRC` + numero + `</h4>
+                        <p>` + titolo + `</p>
+                        <h4>` + data + `</h4>
+                    </div>
+                `;
+                // Aggiungi il nuovo div al div di destinazione
+                divDestinazione.appendChild(nuovoDiv);
+            }
         }
 
     }
@@ -268,43 +341,39 @@
         let risposta = await fetch(url);
         if (risposta.ok) {
             let dati = await risposta.json();
-            console.log(dati);
+            var divDestinazione = document.getElementById("rispostaRic");
+                divDestinazione.innerHTML = "";
             for (let i = 0; i < dati.length; i++) {
                 let numero = dati[i].numero;
                 let titolo = dati[i].nome;
                 let data = dati[i].data;
                 // Seleziona il div di destinazione
-                var divDestinazione = document.getElementById("ultimecirc");
+                
 
                 // Crea un nuovo elemento div
                 var nuovoDiv = document.createElement("div");
                 nuovoDiv.className = "circ";
                 nuovoDiv.setAttribute("width", "50em");
-                nuovoDiv.setAttribute("onclick", "aggiungi()");
+                console.log(dati[i].link);
+                nuovoDiv.setAttribute("onclick", "aggiungi('" + dati[i].link + "')"); 
 
                 // Contenuto del nuovo div
                 nuovoDiv.innerHTML = `
-    <div id="icone">
-        <img src="pdf.png" width="50em">
-    </div>
-    <div id="testo">
-        <h4>CIRC` + numero + `</h4>
-        <p>` + titolo + `</p>
-        <h4>` + data + `</h4>
-    </div>
-`;
-
+                    <div id="icone">
+                        <img src="pdf.png" width="50em">
+                    </div>
+                    <div id="testo">
+                        <h4>CIRC` + numero + `</h4>
+                        <p>` + titolo + `</p>
+                        <h4>` + data + `</h4>
+                    </div>
+                `;
                 // Aggiungi il nuovo div al div di destinazione
                 divDestinazione.appendChild(nuovoDiv);
-
             }
-
-
         }
-
-
-
     }
+
 
     async function funzioneFamiglie() {
         // Logica per l'opzione Famiglie
@@ -314,6 +383,36 @@
         if (risposta.ok) {
             let dati = await risposta.json();
             console.log(dati);
+            var divDestinazione = document.getElementById("rispostaRic");
+                divDestinazione.innerHTML = "";
+            for (let i = 0; i < dati.length; i++) {
+                let numero = dati[i].numero;
+                let titolo = dati[i].nome;
+                let data = dati[i].data;
+                // Seleziona il div di destinazione
+                
+
+                // Crea un nuovo elemento div
+                var nuovoDiv = document.createElement("div");
+                nuovoDiv.className = "circ";
+                nuovoDiv.setAttribute("width", "50em");
+                console.log(dati[i].link);
+                nuovoDiv.setAttribute("onclick", "aggiungi('" + dati[i].link + "')"); 
+
+                // Contenuto del nuovo div
+                nuovoDiv.innerHTML = `
+                    <div id="icone">
+                        <img src="pdf.png" width="50em">
+                    </div>
+                    <div id="testo">
+                        <h4>CIRC` + numero + `</h4>
+                        <p>` + titolo + `</p>
+                        <h4>` + data + `</h4>
+                    </div>
+                `;
+                // Aggiungi il nuovo div al div di destinazione
+                divDestinazione.appendChild(nuovoDiv);
+            }
         }
 
     }
@@ -326,6 +425,36 @@
         if (risposta.ok) {
             let dati = await risposta.json();
             console.log(dati);
+            var divDestinazione = document.getElementById("rispostaRic");
+                divDestinazione.innerHTML = "";
+            for (let i = 0; i < dati.length; i++) {
+                let numero = dati[i].numero;
+                let titolo = dati[i].nome;
+                let data = dati[i].data;
+                // Seleziona il div di destinazione
+                
+
+                // Crea un nuovo elemento div
+                var nuovoDiv = document.createElement("div");
+                nuovoDiv.className = "circ";
+                nuovoDiv.setAttribute("width", "50em");
+                console.log(dati[i].link);
+                nuovoDiv.setAttribute("onclick", "aggiungi('" + dati[i].link + "')"); 
+
+                // Contenuto del nuovo div
+                nuovoDiv.innerHTML = `
+                    <div id="icone">
+                        <img src="pdf.png" width="50em">
+                    </div>
+                    <div id="testo">
+                        <h4>CIRC` + numero + `</h4>
+                        <p>` + titolo + `</p>
+                        <h4>` + data + `</h4>
+                    </div>
+                `;
+                // Aggiungi il nuovo div al div di destinazione
+                divDestinazione.appendChild(nuovoDiv);
+            }
         }
 
     }
@@ -338,10 +467,47 @@
         if (risposta.ok) {
             let dati = await risposta.json();
             console.log(dati);
+            var divDestinazione = document.getElementById("rispostaRic");
+                divDestinazione.innerHTML = "";
+            for (let i = 0; i < dati.length; i++) {
+                let numero = dati[i].numero;
+                let titolo = dati[i].nome;
+                let data = dati[i].data;
+                // Seleziona il div di destinazione
+                
+
+                // Crea un nuovo elemento div
+                var nuovoDiv = document.createElement("div");
+                nuovoDiv.className = "circ";
+                nuovoDiv.setAttribute("width", "50em");
+                console.log(dati[i].link);
+                nuovoDiv.setAttribute("onclick", "aggiungi('" + dati[i].link + "')"); 
+
+                // Contenuto del nuovo div
+                nuovoDiv.innerHTML = `
+                    <div id="icone">
+                        <img src="pdf.png" width="50em">
+                    </div>
+                    <div id="testo">
+                        <h4>CIRC` + numero + `</h4>
+                        <p>` + titolo + `</p>
+                        <h4>` + data + `</h4>
+                    </div>
+                `;
+                // Aggiungi il nuovo div al div di destinazione
+                divDestinazione.appendChild(nuovoDiv);
+            }
         }
 
     }
 
+    function aggiungi(dati){
+        console.log("ciao0");
+        console.log(dati);
+        document.getElementById('circolareAttiva').src = dati;
+    }
+
+    /*
     async function caricda() {
         let url = "http://10.1.0.52:8080/circolari";
         let risposta = await fetch(url);
@@ -423,7 +589,9 @@
             }
 
         }
+        
     }
+    */
 </script>
 
 </html>

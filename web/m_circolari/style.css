@@ -9,3 +9,125 @@
         "categoria circolari"
         "ultimecirc circolari";
 }
+
+.pagina {
+    display: grid;
+    width: 100%;
+    height: 100vh;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr 7fr;
+    grid-template-areas:
+        "categoria circolari"
+        "ultimecirc circolari";
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 2em;
+}
+
+.circolari {
+    grid-area: circolari;
+    border: 1px solid black;
+}
+
+.categoria {
+    grid-area: categoria;
+    border: 1px solid black;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #323639;
+    display: grid;
+    place-items: center;
+}
+
+#risultato_ric {
+    grid-area: ultimecirc;
+    border: 1px solid black;
+    padding: 1em;
+    background-color: #323639;
+    overflow-y: auto;
+}
+
+#contenitore {
+    
+}
+
+table {
+    width: 100%;
+}
+
+#lista {
+    border-right: 1em solid black;
+    width: 40%;
+}
+
+.categoria select {
+    border-radius: 0.5em;
+    font-size: xx-large;
+    background-color: white;
+    border-color: #EECD00;
+    text-align: center;
+}
+
+.categoria #ricCategoria {
+    display: none;
+}
+
+.categoria input {
+    border-radius: 0.5em;
+    font-size: xx-large;
+    background-color: white;
+    border-color: #EECD00;
+    text-align: center;
+    display: none;
+    width: 50%;
+}
+
+.categoria #cercaNum {
+    border-radius: 0.5em;
+    font-size: xx-large;
+    background-color: white;
+    border-color: #EECD00;
+    text-align: center;
+    display: none;
+}
+
+option {
+    background-color: white;
+}
+
+.circ {
+    background-color: white;
+    display: grid;
+    width: 90%;
+    height: auto;
+    margin: auto;
+    margin-bottom: 0.5em;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: "icone testo";
+    align-items: center;
+    border-radius: 0.5em;
+}
+
+.circ:hover {
+    background-color: #c5aa00;
+}
+
+#icone {
+    grid-area: icone;
+    padding: 1em;
+}
+
+#testo {
+    grid-area: testo;
+}
+
+#testo p,
+#testo h4 {
+    margin: 0em;
+}
+
+.allineaVerticale {
+    display: flex;
+    align-items: center;
+}
