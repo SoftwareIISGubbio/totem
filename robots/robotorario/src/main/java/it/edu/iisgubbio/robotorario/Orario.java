@@ -19,7 +19,7 @@ public class Orario {
 		// viene dopo p
 		// Elements titoli = doc.select("p + table");
 		// oppure la classe finisce con _table
-		Elements tabelle = doc.select("table[class$=\"odd_table\"]");
+		Elements tabelle = doc.select("table[class$=\"_table\"]");
 
 		for (Element tabella : tabelle) {
 			Element docente = tabella.select("thead tr:first-child").get(0);
