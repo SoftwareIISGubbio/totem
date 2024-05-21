@@ -21,12 +21,12 @@ import java.sql.Statement;
  * @author Filippo Nardoni
  ***************************************************************************/
 public class DownloadCircolari {
-	static String url = "jdbc:mysql://localhost:3306/totem";
-	static String username = "root";
-	static String password = "";
+	static String url = "jdbc:mysql://10.1.0.52:3306/totem";
+	static String username = "totem";
+	static String password = "totem";
 
 	private static boolean esiste(int n) throws SQLException {
-		String query="SELECT * FROM circolare WHERE numero="+n;
+		String query="SELECT * FROM circolari WHERE numero="+n;
 		Connection connection = DriverManager.getConnection(url, username, password);
 		Statement connesso = connection.createStatement();
 		ResultSet risultato = connesso.executeQuery(query);
@@ -88,7 +88,6 @@ public class DownloadCircolari {
 
 		// Individuo tutti i pulsanti a cui sono collegati dei file da scaricare
 		List<WebElement> elementi = driver.findElements( By.cssSelector("div.media"));
-		System.out.println(elementi.size());
 		try (Connection connection = DriverManager.getConnection(url, username, password)) {
 
 			for(WebElement elem: elementi) {
@@ -108,24 +107,19 @@ public class DownloadCircolari {
 
 				//Ottengo la tipolgia
 				WebElement tipo = elem.findElement(By.cssSelector("li + li.list-group-item strong"));
-				String query = "SELECT titolo FROM circolare";
+				String query = "SELECT titolo FROM circolari";
 				Circolare nuova = new Circolare(titolo, linx, data.getText(), tipo.getText());
-				System.out.println(tipo.getText());
 				Statement istruzione = connection.createStatement();
 				// Esecuzione della query di inserimento
-				////ahsdbcccccccisdcbsdicbdsicbdscbdsciusdbcidsucbsdiucbdsiucbdsciudsbciub
 				if(esiste(nuova.getNumero())) {
 					System.out.println("gia esiste");
 				}else {
 					if(nuova.getNumero()!=0) {
-						String sql = "INSERT INTO circolare (titolo, link, numero, data, famiglia, docenti, personale, alunni, albo_sindacale) VALUES ("+"\"" + nuova.getTitolo() + "\""
+						String sql = "INSERT INTO circolari (nome, link, numero, data, famiglia, docenti, personale, alunni, albo_sindacale) VALUES ("+"\"" + nuova.getTitolo() + "\""
 								+",'" + nuova.getLink() + "'," + nuova.getNumero() + ",'" + nuova.getData()+ "'," + nuova.getFamiglia() + ","+ nuova.getDocenti() + ","+ nuova.getPersonale() + ","
 								+ nuova.getAlunni() + ","+ nuova.getAlboSindacale()+")";
 						istruzione.executeUpdate(sql);
-						System.out.println(nuova.getAlunni());
-						System.out.println(sql); 
 						System.out.println("Record inserito correttamente!!!!!");
-
 					}
 				}
 				//sncipdsucnsdpiucndsuc oic ndsoicndscdsncdsncldkscndslkcndslcnsdclndclkdnclsdcnslkdcndlkcndlcskn

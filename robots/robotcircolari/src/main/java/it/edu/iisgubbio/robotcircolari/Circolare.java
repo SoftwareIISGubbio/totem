@@ -26,7 +26,6 @@ public class Circolare {
      ***********************************************************************/
     public Circolare(String nomeFile, String link, String data, String tipologia){
         setLink(link);
-        System.out.println(this.link);
         
         String tipologie[] = tipologia.split(",");
         
@@ -53,30 +52,24 @@ public class Circolare {
 	   			break;
 	   		
 	   		case "tutto il personale":
-	   			System.out.println("ok");
 	   			setPersonale(true);
 	   			setAlboSindacale(true);
 	    		setAlunni(true);
 	   			setDocenti(true);
 	    		setFamiglia(true);
-	    		System.out.print("sdkcbu");	   
 	    		break;
         }
 	        }
         
         String[] valori = data.split("-");
         setData(LocalDate.parse(valori[2]+"-"+valori[1]+"-"+valori[0]));
-        System.out.println(this.data);
     	
     	Matcher m = patMat(nomeFile);
 
         if (m.find( )) {
             setNumero(Integer.parseInt(m.group(1)));
             setTitolo(m.group(2)); 
-            System.out.println("numero circolare: " + m.group(1) );
-            System.out.println("nome circolare: " + m.group(2) );
         } else {
-            System.out.println("NO MATCH");
         }
     }
     
