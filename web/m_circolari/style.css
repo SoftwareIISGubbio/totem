@@ -1,16 +1,5 @@
-.circ_container {
-    color:white;
-    display: grid;
-    width: 100%;
-    height: 100%;
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: 1fr 7fr;
-    grid-template-areas:
-        "categoria circolari"
-        "ultimecirc circolari";
-}
 
-.pagina {
+.circ_container {
     display: grid;
     width: 100%;
     height: 100vh;
@@ -19,12 +8,10 @@
     grid-template-areas:
         "categoria circolari"
         "ultimecirc circolari";
-        width: 100%;
-        background-color: rgba(255, 255, 255, 0.7);
-        border-radius: 2em;
 }
 
 .circolari {
+    background-color: green;
     grid-area: circolari;
     border: 1px solid black;
 }
@@ -39,20 +26,12 @@
     place-items: center;
 }
 
-#risultato_ric {
+#rispostaRic {
     grid-area: ultimecirc;
     border: 1px solid black;
     padding: 1em;
     background-color: #323639;
     overflow-y: auto;
-}
-
-#contenitore {
-    
-}
-
-table {
-    width: 100%;
 }
 
 #lista {
@@ -91,7 +70,7 @@ table {
     display: none;
 }
 
-option {
+.categorie {
     background-color: white;
 }
 
@@ -113,20 +92,22 @@ option {
     background-color: #c5aa00;
 }
 
-#icone {
+.icone {
     grid-area: icone;
     padding: 1em;
 }
 
-#testo {
+.testo {
     grid-area: testo;
+    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
 }
 
-#testo p,
-#testo h4 {
+.testo p{
     margin: 0em;
 }
-
+.testo h4 {
+    margin: 0em;
+}
 .allineaVerticale {
     display: flex;
     align-items: center;
