@@ -12,7 +12,7 @@ print("bot online")
 
 # Load whitelist
 whitelist = set()
-with open('totem/bot/whitelist.csv', newline='') as csvfile:
+with open('whitelist.csv', newline='') as csvfile:
     reader = csv.reader(csvfile)
     for row in reader:
         whitelist.add(row[0])
