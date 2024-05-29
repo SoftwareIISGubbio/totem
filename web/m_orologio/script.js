@@ -48,8 +48,17 @@ function m_orologioD(id){
 }
 function m_orologio(id){
     orologioBox = document.getElementById(id);
+    let width = orologioBox.offsetWidth;
+    let height = orologioBox.offsetHeight;
+    if(width>height){
+        width = height;
+    }else{
+        height = width;
+    }
+    console.log(orologioBox);
+    let dims=`width:${width}px;height:${height}px;`;
     orologioBox.innerHTML = `<div id="clock">
-    <div id="ora">
+    <div id="ora" style="${dims}; margin:auto">
         <div style="--clr: black; --h: 74px" id="hour" class="hand">
             <i></i>
         </div>
@@ -75,7 +84,7 @@ function m_orologio(id){
     </div>
 </div>`;
 
-    
+
     avviaOrologioA()
 }
 function avviaOrologioA() {
