@@ -25,9 +25,8 @@ function orarioMostra(){
 
 function m_orario(id){
     let orarioBox = document.getElementById(id);
-    orarioBox.innerHTML = `orario<br>
-    <img src="wip.png" alt="lavori in corso" width="100">
-    `; // FIXME: inserisci il contenuto
+    orarioBox.style.cssText += `display:flex`;
+    orarioBox.innerHTML = `<img src="m_orario/ico_orario.png" alt="lavori in corso" >`;
 
     orarioBox.addEventListener('click', circolariMostra);
 
