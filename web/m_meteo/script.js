@@ -35,7 +35,7 @@ async function meteoAggiorna(){
             for(let i=0; i<icona.length; i++){
                 url="https://openweathermap.org/img/wn/"+dati.list[i].weather[0].icon+"@2x.png";
                 icona[i].src=url;
-                let transito = (dati.list[0].main.temp+"°").split(".");
+                let transito = (dati.list[i].main.temp+"°").split(".");
                 temperatura[i].innerText= transito[0]+"°";
             }
             let id = dati.list[0].weather[0].icon;

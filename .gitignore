@@ -24,3 +24,6 @@ buildNumber.properties
 
 #VS Code
 .vscode/
+
+
+/bot/penv
