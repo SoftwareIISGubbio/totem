@@ -58,6 +58,11 @@
             m_circolari("circolari");
             m_orario("orario");
             m_bot("bot");
+
+            let browserInfo = document.createElement("div");
+            browserInfo.style.cssText = "color: rgba(255,0,0,0.75); font-weight: bold;";
+            browserInfo.innerHTML = navigator.userAgent;
+            logo.appendChild(browserInfo);
         }
     </script>
 </head>
