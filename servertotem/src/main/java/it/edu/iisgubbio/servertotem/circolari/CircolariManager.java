@@ -18,9 +18,9 @@ public class CircolariManager {
 
 	@Autowired
 	RepoCircolari repoCircolari;
-	
+
 	 @GetMapping("/circolari")
-	    public List<Circolari> cerca(
+	    public List<Circolare> cerca(
 	    	@RequestParam(required = false) Integer N,
 	        @RequestParam(required = false) String nome,
 	        @RequestParam(required = false) String link,
@@ -35,28 +35,24 @@ public class CircolariManager {
 		 if (N!=null && N>0) {
 			return repoCircolari.ultime(N);
 		 }else {
-	        Circolari o = new Circolari();
+	        Circolare o = new Circolare();
 	        o.setNome(nome);
 	        o.setLink(link);
 	        o.setNumero(numero);
 	        o.setData(data);
 	        o.setFamiglia(famiglia);
-	        o.setAlbo_Sindacale(albo_sindacale);
+	        o.setAlboSindacale(albo_sindacale);
 	        o.setAlunni(alunni);
 	        o.setDocenti(docenti);
 	        o.setPersonale(personale);
-	        Example<Circolari> example = Example.of(o);
+	        Example<Circolare> example = Example.of(o);
 	        return repoCircolari.findAll( example );
 	    }
 	 }
-		
+
 	 	@GetMapping("/circolare/{id}")
-		public Optional<Circolari> prendiPerChiave( @PathVariable int id ) {
+		public Optional<Circolare> prendiPerChiave( @PathVariable int id ) {
 		    return repoCircolari.findById(id);
 		}
 
-
-
-
-	
 }

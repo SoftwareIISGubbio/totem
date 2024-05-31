@@ -7,13 +7,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-@Entity
-public class Circolari {
-	
+@Entity(name="circolari")
+public class Circolare {
+
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-	
+
 	String nome;
 	String link;
 	Integer numero;
@@ -22,7 +22,7 @@ public class Circolari {
 	Boolean docenti;
 	Boolean personale;
 	Boolean alunni;
-	Boolean Albo_Sindacale;
+	Boolean alboSindacale;
 	public Integer getId() {
 		return id;
 	}
@@ -77,15 +77,10 @@ public class Circolari {
 	public void setAlunni(Boolean alunni) {
 		this.alunni = alunni;
 	}
-	public Boolean getAlbo_Sindacale() {
-		return Albo_Sindacale;
+	public Boolean getAlboSindacale() {
+		return alboSindacale;
 	}
-	public void setAlbo_Sindacale(Boolean albo_Sindacale) {
-		Albo_Sindacale = albo_Sindacale;
+	public void setAlboSindacale(Boolean alboSindacale) {
+		this.alboSindacale = alboSindacale;
 	}
-
-	
-	
-	
-
 }

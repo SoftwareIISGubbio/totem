@@ -5,9 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.devtools.v119.io.IO;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -21,16 +29,44 @@ import java.sql.Statement;
  * @author Filippo Nardoni
  ***************************************************************************/
 public class DownloadCircolari {
-	static String url = "jdbc:mysql://10.1.0.52:3306/totem";
+	static String url = getValore("TOTEM_DATABASE","jdbc:mysql://10.1.0.52:3306/totem");
+	static String pathCircolari = getValore("TOTEM_CIRCOLARI","/tmp/");
 	static String username = "totem";
 	static String password = "totem";
+
+	/************************************************************************
+	 * Metodo che permette di ottenere il valore di una variabile d'ambiente
+	 * o un valore predefinito se la variabile non è definita
+	 ***********************************************************************/
+	private static String getValore(String variabile, String predefinito){
+		String v = System.getenv(variabile);
+		if(v==null){
+			return predefinito;
+		} else {
+			return v;
+		}
+	}
+
+	/************************************************************************
+	 * Scarica materiale dalla rete
+	 * @param link il link da cui scaricare
+	 * @param file il file in cui salvare
+	 ***********************************************************************/
+	private static void scaricaCircolare(String link, String file) throws IOException{
+		URL url = new URL(link);
+        ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        FileChannel fileChannel = fileOutputStream.getChannel();
+        fileChannel.transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+        fileOutputStream.close();
+	}
 
 	private static boolean esiste(int n) throws SQLException {
 		String query="SELECT * FROM circolari WHERE numero="+n;
 		Connection connection = DriverManager.getConnection(url, username, password);
 		Statement connesso = connection.createStatement();
 		ResultSet risultato = connesso.executeQuery(query);
-		boolean esisateProssimo =  risultato.next();	
+		boolean esisateProssimo =  risultato.next();
 		risultato.close();
 		connesso.close();
 		return esisateProssimo;
@@ -111,20 +147,23 @@ public class DownloadCircolari {
 				Circolare nuova = new Circolare(titolo, linx, data.getText(), tipo.getText());
 				Statement istruzione = connection.createStatement();
 				// Esecuzione della query di inserimento
+				System.out.print(nuova.getNumero()+": ");
 				if(esiste(nuova.getNumero())) {
 					System.out.println("gia esiste");
 				}else {
-					if(nuova.getNumero()!=0) {
+					System.out.println("nuova");
+					if(nuova.getNumero()!=0) { // FIXME: come mai ci sono circolari senza numero?
 						String sql = "INSERT INTO circolari (nome, link, numero, data, famiglia, docenti, personale, alunni, albo_sindacale) VALUES ("+"\"" + nuova.getTitolo() + "\""
 								+",'" + nuova.getLink() + "'," + nuova.getNumero() + ",'" + nuova.getData()+ "'," + nuova.getFamiglia() + ","+ nuova.getDocenti() + ","+ nuova.getPersonale() + ","
 								+ nuova.getAlunni() + ","+ nuova.getAlboSindacale()+")";
 						istruzione.executeUpdate(sql);
-						System.out.println("Record inserito correttamente!!!!!");
+
+						scaricaCircolare(nuova.getLink(), pathCircolari+nuova.getNumero()+".pdf");
 					}
 				}
 				//sncipdsucnsdpiucndsuc oic ndsoicndscdsncdsncldkscndslkcndslcnsdclndclkdnclsdcnslkdcndlkcndlcskn
 				// System.out.println(result);
-			} 
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
