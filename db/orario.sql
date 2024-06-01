@@ -1,14 +1,14 @@
 CREATE TABLE orario (
-  id int(11)  AUTO_INCREMENT PRIMARY KEY,
-  professore varchar(40) NOT NULL,
-  aula varchar(10) NOT NULL,
+  id int AUTO_INCREMENT PRIMARY KEY,
+  professore varchar(50) NOT NULL,
+  aula varchar(50) NOT NULL,
   giorno int NOT NULL, -- 0 lunedì
   ora int DEFAULT NULL, -- 0 prima ora
-  classe varchar(10) NOT NULL
-) 
+  classe varchar(50) NOT NULL
+);
 
-INSERT INTO orario (professore, aula, giorno, ora, classe) 
-VALUES 
+INSERT INTO orario (professore, aula, giorno, ora, classe)
+VALUES
 ('boh', '120', 1, 0, '3t1'),
 ('maranghi', '223', 0, 2, '5i2'),
 ('maranghi', '245', 2, 3,  '3i2'),

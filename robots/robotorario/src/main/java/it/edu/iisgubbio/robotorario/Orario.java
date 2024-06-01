@@ -11,6 +11,14 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Orario {
+	private static String getValore(String variabile, String predefinito){
+		String v = System.getenv(variabile);
+		if(v==null){
+			return predefinito;
+		} else {
+			return v;
+		}
+	}
 	public static void main(String[] args) throws Exception {
 		// URL della sezione "Tecnologia" del sito web "[URL non valido rimosso]"
 		final String URL_ORARI = "https://lnx.iisgubbio.edu.it/Orario/orario_docenti_nuovo.html";
@@ -31,12 +39,12 @@ public class Orario {
 		String classe;
 		String aula ;
 		String insert;
-		String url = "jdbc:mysql://10.1.0.52:3306/totem";
+		String url = getValore("TOTEM_DATABASE","jdbc:mysql://10.1.0.52:3306/totem");
 		String username = "totem";
 		String password = "totem";
-		try (Connection connection = DriverManager.getConnection(url, username, password)) {
+		try (Connection connection = DriverManager.getConnection(url, username, password);
 			Statement istruzione = connection.createStatement();
-
+		) {
 			for (Element tabella : tabelle) {
 
 				Element docente = tabella.select("thead tr:first-child").first();
@@ -75,7 +83,7 @@ public class Orario {
 						}
 
 
-					}    
+					}
 					nRiga++;
 				}
 
@@ -84,6 +92,6 @@ public class Orario {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-	} 
+	}
 }
 

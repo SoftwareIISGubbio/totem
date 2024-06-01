@@ -11,7 +11,7 @@ public class Immagini {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String user_name;
+    private String userName;
     private LocalDate data;
     private Integer descizione;
     private Integer tag;
@@ -22,10 +22,10 @@ public class Immagini {
 		this.id = id;
 	}
 	public String getUser_name() {
-		return user_name;
+		return userName;
 	}
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public void setUser_name(String userName) {
+		this.userName = userName;
 	}
 	public LocalDate getData() {
 		return data;
@@ -45,5 +45,5 @@ public class Immagini {
 	public void setTag(Integer tag) {
 		this.tag = tag;
 	}
-	
+
 }

@@ -26,7 +26,7 @@ function avviaOrologioD() {
     setTimeout(avviaOrologioD, 1000);
 }
 
-function m_orologioD(id){
+function m_orologio(id){
     orologioBox = document.getElementById(id);
     orologioBox.innerHTML = `<div id="clock"></div>`;
 
@@ -46,7 +46,7 @@ function m_orologioD(id){
     `;
     avviaOrologioD()
 }
-function m_orologio(id){
+function m_orologioA(id){
     orologioBox = document.getElementById(id);
     let width = orologioBox.offsetWidth;
     let height = orologioBox.offsetHeight;

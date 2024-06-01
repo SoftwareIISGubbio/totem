@@ -5,23 +5,26 @@ averla elaborata la mettono da qualche altra parte in locale. dentro un db?
 
 ## Circolari
 
-Ce l'ha Filippo ma dove li mettiamo i pdf? usiamo quelli on line o istruiamo Spring a prenderli da una cartella... o forse basta buttarli in una cartella di apache.
+Scarica le informazioni sulle circolari e i relativi pdf
+perché utilizzare direttamente quelli sul sito della scuola viene impedito
+dagli header di Content-Security-Policy
 
+Per provare:
 `mvn compile exec:java -Dexec.mainClass="it.edu.iisgubbio.robotorario.Orario"`
 
-se il server non è talos e state usando una qualche variante di unix:
+`mvn package` produce un jar avviabile
 
+se il server non è talos e state usando una qualche variante di unix:
 `export TOTEM_DATABASE=jdbc:mysql://192.168.64.7:3306/totem`
 
 ## Orario
 
-- Questo basta che da HTML si fanno le singole insert
-- La versione base basta che prende l'orario di FET
-- curl deve essere installato (lo è per macOS, è un pacchetto presente in tutte le distribuzioni di Linux)
+Carica i dati dell'orario dal file di FET presente sul sito
 
-`mvn compile exec:java -Dexec.mainClass="it.edu.iisgubbio.robotcircolari.DownloadCircolari"`
+per fare test: `mvn compile exec:java -Dexec.mainClass="it.edu.iisgubbio.robotcircolari.DownloadCircolari"`
+
+`mvn package` produce un jar avviabile
 
 se il server non è talos e state usando una qualche variante di unix:
-
 `export TOTEM_DATABASE=jdbc:mysql://192.168.64.7:3306/totem`
 `export TOTEM_CIRCOLARI=/Volumes/ramdisk/`
