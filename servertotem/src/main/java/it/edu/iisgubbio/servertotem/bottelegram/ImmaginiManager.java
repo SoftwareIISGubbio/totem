@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,11 +25,12 @@ public class ImmaginiManager {
 	@Autowired
 	ImmaginiRepository repoCampo;
 
+    @Value("${totem.immaginibot}")
+    String directoryPath;
+
 	@GetMapping("/immagini/{tag}")
-	 public ResponseEntity<InputStreamResource> prendiCampi(@PathVariable String tag) {
-		
-		
-        String directoryPath = "/Users/yassedboussalham/Desktop/"; // Percorso della directory dei file
+	public ResponseEntity<InputStreamResource> prendiCampi(@PathVariable String tag) {
+
         String fileName = tag + ".jpg"; // Nome del file basato sul tag
         String filePath = directoryPath + fileName; // Percorso completo del file
         System.out.println(filePath);
@@ -41,7 +43,8 @@ public class ImmaginiManager {
 
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.IMAGE_JPEG);
-                headers.setContentDispositionFormData("attachment", fileName);
+                // TODO: se metto quella sotto l'immagine arriva come allegato
+                // headers.setContentDispositionFormData("attachment", fileName);
 
                 return new ResponseEntity<>(resource, headers, HttpStatus.OK);
             } catch (IOException e) {
