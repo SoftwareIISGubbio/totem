@@ -8,20 +8,13 @@ function clearTableCells() {
     }
 }
 
-async function recuperaInformazioni() {
-    let risposta = await fetch("http://10.1.0.52:8080/orario");
-    let orario = await risposta.json();
-    console.log(orario);
-}
-async function Orario_combo() {
-
+async function orario_comboProfessori() {
     let elemento;
     let comboBox = document.getElementById("prof");
-
     const url = "http://10.1.0.52:8080/professori";
-    console.log(url);
     const risposta = await fetch(url);
     const elenco = await risposta.json();
+
     for (let i = 0; i < elenco.length; i++) {
         elemento = document.createElement("option");
         elemento.innerText = elenco[i];
@@ -29,61 +22,50 @@ async function Orario_combo() {
     }
 }
 
-async function recuperoOrario() {
+async function orario_recuperoPerProfessore() {
     let elemento;
-
     let comboBox = document.getElementById("prof");
     let nome = comboBox.value;
-    console.log(nome);
     const url = "http://10.1.0.52:8080/orario?professore=" + nome;
-    console.log(url);
     const risposta = await fetch(url);
     const elenco = await risposta.json();
-    console.log(elenco);
+
     clearTableCells();
+    orario_titolo.innerText="Prof. "+nome;
     for (let i = 0; i < elenco.length; i++) {
         let casella = "c" + elenco[i].giorno + elenco[i].ora;
-        console.log(casella);
         let cella = document.getElementById(casella);
         cella.innerText = elenco[i].classe;
     }
 }
-async function OrarioClassi_combo() {
-
+async function orario_comboClassi() {
     let elemento;
     let comboBox = document.getElementById("classi");
-
     const url = "http://10.1.0.52:8080/classi";
-    console.log(url);
     const risposta = await fetch(url);
     const elenco = await risposta.json();
-    for (let i = 0; i < elenco.length; i++) {
 
-        console.log(elenco[i]);
+    for (let i = 0; i < elenco.length; i++) {
         elemento = document.createElement("option");
         elemento.innerText = elenco[i];
         comboBox.appendChild(elemento);
     }
 }
-async function recuperoOrarioClassi() {
+async function orario_recuperoPerClasse() {
     let elemento;
-
     let comboBox = document.getElementById("classi");
     let classe = comboBox.value;
-    console.log(classe);
     const url = "http://10.1.0.52:8080/orario?classe=" + classe;
-    console.log(url);
     const risposta = await fetch(url);
     const elenco = await risposta.json();
-    console.log(elenco);
 
+    clearTableCells();
+    orario_titolo.innerText="Classe "+classe;
     for (let i = 0; i < elenco.length; i++) {
         let casella = "c" + elenco[i].giorno + elenco[i].ora;
-        console.log(casella);
         let cella = document.getElementById(casella);
         cella.innerText = "";
         cella.innerText = elenco[i].professore;
-
     }
 }
 
@@ -99,32 +81,26 @@ function orarioMostra(){
     `;
 
     box_orario.id="orario_box";
-    
-    
 
-    
-    // FIXME: inserisci il contenuto
     box_orario.innerHTML = `
     <div id="orario_pagina" class="orario_griglia">
         <div class="orario_professori">
             <p>Prof</p>
-            <select id="prof" onchange="recuperoOrario()">
+            <select id="prof" onchange="orario_recuperoPerProfessore()">
                 <option></option>
             </select>
         </div>
         <div class="orario_classi">
             <p>Classi</p>
-            <select id="classi" onchange="recuperoOrarioClassi()">
+            <select id="classi" onchange="orario_recuperoPerClasse()">
                 <option></option>
             </select>
         </div>
         <div id="allinea" onclick="box_orario.remove()" class="orario_chiudi">
             <span>chiudi pagina</span>
         </div>
-        
-    <div class="orario_orario">ORARIO:</div>
     <div class="orario_materie">
-        <div id="tabella">
+        <h1 id="orario_titolo"></h1>
             <table>
                 <tr>
                     <th> </th>
@@ -213,18 +189,19 @@ function orarioMostra(){
         </div>
 
     </div>
-    </div>
     `;
     document.body.appendChild(box_orario);
-    Orario_combo();
-    OrarioClassi_combo();
+    try{
+        orario_comboProfessori();
+        orario_comboClassi();
+    }catch(errore){
+        document.querySelector(".orario_materie").innerHTML+=`<p>ERRORE: ${errore.message}</p>`;
+    }
 }
 
 function m_orario(id){
     let orarioBox = document.getElementById(id);
     orarioBox.style.cssText += `display:flex`;
     orarioBox.innerHTML = `<img src="m_orario/ico_orario.png" alt="lavori in corso" >`;
-
     orarioBox.addEventListener('click', orarioMostra);
-
 }
