@@ -2,11 +2,11 @@
     margin: 0;
     height: 100vh;
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-template-rows: 1fr 8fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto 8fr;
     grid-template-areas:
-        "prof orario"
-        "prof materie"
+        "prof classi chiudi"
+        "orario orario orario" 
 
 }
 
@@ -21,26 +21,38 @@
     font-size: 25px;
     text-align: center;
     background-color: yellow;
+    display: flex;
+    align-items: center;
+   
 }
 
-.orario_orario {
+
+.orario_materie {
     grid-area: orario;
     color: #b8860b;
     font-size: 25px;
     text-align: center;
     background-color: yellow;
-    line-height: 2.5em;
+
 
 }
 
-.orario_materie {
-    grid-area: materie;
-    color: #b8860b;
-    font-size: 25px;
-    text-align: center;
+.orario_chiudi{
+    grid-area: chiudi;
     background-color: yellow;
+    margin:0;
+    padding-right: 2em;
+    padding-top: 2em;
+    
+}
 
-
+.orario_chiudi span {
+    border: 1px solid black;
+    border-radius:1em;
+   text-align: center;
+   background-color: rgb(31, 31, 214);
+   color: white;
+   padding: 1em;
 }
 
 .orario_classi {
@@ -48,5 +60,17 @@
     color: #b8860b;
     font-size: 25px;
     text-align: center;
+    display: flex;
+    align-items: center;
     background-color: yellow;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: black solid 1px;
+ 
 }

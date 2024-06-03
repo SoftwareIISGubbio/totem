@@ -105,19 +105,23 @@ function orarioMostra(){
     
     // FIXME: inserisci il contenuto
     box_orario.innerHTML = `
-    <div class="orario_container" id="orario_pagina" class="orario_griglia">
-    <div class="orario_professori">
-    <p id="allinea" onclick="box_orario.remove()">chiudi pagina</p>
-        <p>Prof</p>
-        <select id="prof" onchange="recuperoOrario()">
-            <option></option>
-        </select>
-        <p>Classi</p>
-        <select id="classi" onchange="recuperoOrarioClassi()">
-            <option></option>
-        </select>
-    </div>
-
+    <div id="orario_pagina" class="orario_griglia">
+        <div class="orario_professori">
+            <p>Prof</p>
+            <select id="prof" onchange="recuperoOrario()">
+                <option></option>
+            </select>
+        </div>
+        <div class="orario_classi">
+            <p>Classi</p>
+            <select id="classi" onchange="recuperoOrarioClassi()">
+                <option></option>
+            </select>
+        </div>
+        <div id="allinea" onclick="box_orario.remove()" class="orario_chiudi">
+            <span>chiudi pagina</span>
+        </div>
+        
     <div class="orario_orario">ORARIO:</div>
     <div class="orario_materie">
         <div id="tabella">
