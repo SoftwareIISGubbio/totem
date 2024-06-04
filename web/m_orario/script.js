@@ -55,7 +55,7 @@ async function orario_recuperoPerClasse() {
     let elemento;
     let comboBox = document.getElementById("classi");
     let classe = comboBox.value;
-    const url = "http://10.1.0.52:8080/orario?classe=" + classe;
+    const url = "http://10.1.0.52:8080/orario?classe=" + encodeURIComponent(classe);
     const risposta = await fetch(url);
     const elenco = await risposta.json();
 
