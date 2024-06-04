@@ -10,7 +10,7 @@ perché utilizzare direttamente quelli sul sito della scuola viene impedito
 dagli header di Content-Security-Policy
 
 Per provare:
-`mvn compile exec:java -Dexec.mainClass="it.edu.iisgubbio.robotorario.Orario"`
+`mvn compile exec:java -Dexec.mainClass="it.edu.iisgubbio.robotcircolari.DownloadCircolari"`
 
 `mvn package` produce un jar avviabile
 

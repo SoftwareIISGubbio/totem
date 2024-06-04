@@ -1,7 +1,8 @@
 "use strict";
 
 function circolariMostra(numero) {
-    console.log("ciao");
+    const URL_PDF =`http://10.1.0.52:8080/pdf/${numero}`;
+    console.log(URL_PDF);
     let box = document.createElement('div');
     box.style.cssText = `
     position: fixed;
@@ -14,12 +15,12 @@ function circolariMostra(numero) {
     box.addEventListener('click', () => {
         box.remove();
     });
-    // FIXME: inserisci il contenuto
+    console.log("csvhdfgjdslfjsd fglsdhjg lsfhg dlshf l");
     box.innerHTML = `
-    <div class="pagina" id="pagina">
+    <div id="pagina" class="circ_container">
     <!--   CIRCOLARE ATTIVA   -->
     <div class="circolari">
-        <iframe src="${numero}" width="100%" height="100%" id="circolareAttiva"></iframe>
+        <iframe src="${URL_PDF}" width="100%" height="100%" id="circolareAttiva"></iframe>
     </div>
 
     <!--   CIRCOLARI   -->
@@ -57,7 +58,7 @@ function circolariMostra(numero) {
 async function m_circolari(id) {
     let circolariBox = document.getElementById(id);
     let array = [];
-    let url = "http://10.1.0.52:8080/circolari";
+    let url = "http://10.1.0.52:8080/circolari?N=3";
     let risposta = await fetch(url);
     if (risposta.ok) {
         let dati = await risposta.json();
@@ -66,14 +67,15 @@ async function m_circolari(id) {
         }
     } else {
         console.log("Failed to fetch");
+        // TODO: put something on the page!
     }
 
     console.log(array);
     circolariBox.innerHTML = `
-        <p onclick="circolariMostra('${array[0].link}')">${array[0].numero}: ${array[0].nome}</p>
-        <p onclick="circolariMostra('${array[1].link}')">${array[1].numero}: ${array[1].nome}</p>
-        <p onclick="circolariMostra('${array[2].link}')">${array[2].numero}: ${array[2].nome}</p>
-        <p onclick="circolariMostra()">cerca</p>
+        <p onclick="circolariMostra('${array[0].numero}')">${array[0].numero}: ${array[0].nome}</p>
+        <p onclick="circolariMostra('${array[1].numero}')">${array[1].numero}: ${array[1].nome}</p>
+        <p onclick="circolariMostra('${array[2].numero}')">${array[2].numero}: ${array[2].nome}</p>
+        <p onclick="circolariMostra()">visualizza altre</p>
     `;
     circolariBox.style.cssText = `
         padding:1em;
