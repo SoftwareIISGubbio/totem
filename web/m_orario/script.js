@@ -101,7 +101,7 @@ function orarioMostra(){
         </div>
     <div class="orario_materie">
         <h1 id="orario_titolo"></h1>
-            <table>
+            <table id="tabella">
                 <tr>
                     <th> </th>
                     <th>Lunedì</th>
