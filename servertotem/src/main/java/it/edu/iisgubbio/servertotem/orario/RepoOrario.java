@@ -7,11 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface RepoOrario extends JpaRepository<Orario, Integer>{
-	@Query(value="SELECT DISTINCT professore FROM orario ", 
+	@Query(value="SELECT DISTINCT professore FROM orario ORDER BY professore", 
        nativeQuery=true)
     List<String> elencaProfessori();
 	
-	@Query(value="SELECT DISTINCT classe FROM orario ", 
+	@Query(value="SELECT DISTINCT classe FROM orario ORDER BY classe", 
 		       nativeQuery=true)
 		    List<String> elencaClassi();
 }
