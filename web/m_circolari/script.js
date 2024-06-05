@@ -1,8 +1,8 @@
 "use strict";
 
+let circolari_box;
 function circolariMostra(numero) {
     const URL_PDF =`http://10.1.0.52:8080/pdf/${numero}`;
-    console.log(URL_PDF);
     let box = document.createElement('div');
     box.style.cssText = `
     position: fixed;
@@ -12,10 +12,7 @@ function circolariMostra(numero) {
     background-color: rgba(0,0,0,0.9);
     `;
     box.id = "circ_box";
-    box.addEventListener('click', () => {
-        box.remove();
-    });
-    console.log("csvhdfgjdslfjsd fglsdhjg lsfhg dlshf l");
+    circolari_box=box;
     box.innerHTML = `
     <div id="pagina" class="circ_container">
     <!--   CIRCOLARE ATTIVA   -->
@@ -29,6 +26,7 @@ function circolariMostra(numero) {
 
     <!--   ricCategoria   -->
     <div class="categoria">
+        <span onclick="box_circolari.remove()">chiudi</span>
         <select id="ricerca" onchange="ricerca()">
             <option disabled selected hidden>Ricerca per</option>
             <option value="ricCategoria">Categoria</option>
@@ -70,7 +68,6 @@ async function m_circolari(id) {
         // TODO: put something on the page!
     }
 
-    console.log(array);
     circolariBox.innerHTML = `
         <p onclick="circolariMostra('${array[0].numero}')">${array[0].numero}: ${array[0].nome}</p>
         <p onclick="circolariMostra('${array[1].numero}')">${array[1].numero}: ${array[1].nome}</p>
@@ -81,4 +78,99 @@ async function m_circolari(id) {
         padding:1em;
     `;
 
+}
+
+
+function ricerca() {
+    let ricercaSelezionata = document.getElementById("ricerca").value;
+    switch (ricercaSelezionata) {
+        case "ricCategoria":
+            ricCategoria();
+            break;
+        case "ricNumero":
+            ricNumero();
+            break;
+    }
+}
+
+function ricCategoria() {
+    let select = document.getElementById("ricCategoria");
+    document.getElementById("ricNumero").style.display = "none";
+    document.getElementById("cercaNum").style.display = "none"
+    select.style.display = "unset";
+    document.getElementById("rispostaRic").innerHTML = "";
+}
+
+function ricNumero() {
+    let select = document.getElementById("ricNumero");
+    document.getElementById("ricCategoria").style.display = "none";
+    document.getElementById("cercaNum").style.display = "unset";
+    select.style.display = "unset";
+    document.getElementById("rispostaRic").innerHTML = "";
+}
+
+function carica() {
+    let categoriaSelezionata = document.getElementById("ricCategoria").value;
+    switch (categoriaSelezionata) {
+        case "albo_sindacale":
+            ricercaCircolari('albo_Sindacale');
+            break;
+        case "alunni":
+            ricercaCircolari('alunni');
+            break;
+        case "docenti":
+            ricercaCircolari('docenti');
+            break;
+        case "famiglie":
+            ricercaCircolari('famiglie');
+            break;
+        case "personale_ata":
+            ricercaCircolari('personale');
+            break;
+        case "per_tutti":
+            ricercaCircolari();
+            break;
+         default:
+            break;
+    }
+}
+
+async function ricercaCircolari(cosaCercare) {
+    let url = cosaCercare.length>0 
+        ? `http://10.1.0.52:8080/circolari?${cosaCercare}=1`
+        : `http://10.1.0.52:8080/circolari`;
+    let risposta = await fetch(url);
+    if (risposta.ok) {
+        let dati = await risposta.json();
+        let divDestinazione = document.getElementById("rispostaRic");
+        divDestinazione.innerHTML = "";
+        for (let i = 0; i < dati.length; i++) {
+             let numero = dati[i].numero;
+             let titolo = dati[i].nome;
+             let data = dati[i].data;
+             // Crea un nuovo elemento div
+             let nuovoDiv = document.createElement("div");
+             nuovoDiv.className = "circ";
+             nuovoDiv.setAttribute("width", "50em");
+             nuovoDiv.setAttribute("onclick", "aggiungiCirc('http://10.1.0.52:8080/pdf/" + dati[i].numero + "')");
+             // Contenuto del nuovo div
+             nuovoDiv.innerHTML = `
+                 <div class="icone">
+                     <img src="pdf.png" width="50em">
+                 </div>
+                 <div class="testo">
+                     <h4>CIRC` + numero + `</h4>
+                     <p>` + titolo + `</p>
+                     <h4>` + data + `</h4>
+                 </div>`;
+             // Aggiungi il nuovo div al div di destinazione
+             divDestinazione.appendChild(nuovoDiv);
+        }
+    }
+}
+
+function aggiungiCirc(dati){
+    //Funzione che sostituisce la circolare attiva nell'embed
+    console.log(dati);
+    document.getElementById('circolareAttiva').src = dati;
 }

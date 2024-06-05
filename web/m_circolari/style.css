@@ -26,6 +26,14 @@
     place-items: center;
 }
 
+.categoria > span {
+    border: 1px solid black;
+    border-radius:1em;
+    background-color:rgb(31,31,214);
+    color: white;
+    padding:1em;
+}
+
 #rispostaRic {
     grid-area: ultimecirc;
     border: 1px solid black;
