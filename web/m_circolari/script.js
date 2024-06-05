@@ -44,7 +44,7 @@ function circolariMostra(numero) {
         </select>
         <div class="allineaVerticale">
             <input type="number" min="1" placeholder="Numero cirolare..." id="ricNumero" name="ricNumero">
-            <button id="cercaNum">Cerca</button>
+            <button id="cercaNum" onclick="caricaPerNumero()">Cerca</button>
         </div>
 
     </div>
@@ -167,6 +167,11 @@ async function ricercaCircolari(cosaCercare) {
              divDestinazione.appendChild(nuovoDiv);
         }
     }
+}
+
+function caricaPerNumero(){
+     let numero = document.getElementById("ricNumero").value;
+     aggiungiCirc("http://10.1.0.52:8080/pdf/"+numero);
 }
 
 function aggiungiCirc(dati){
