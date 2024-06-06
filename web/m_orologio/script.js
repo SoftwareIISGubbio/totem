@@ -22,7 +22,7 @@ function avviaOrologioD() {
     let a = giorno.getFullYear();
     m = checkTime(m);
     s = checkTime(s);
-    document.getElementById('orologio').innerHTML = g + "<br>" + d + " " + mese + "<br>" + h + ":" + m;
+    document.getElementById('orologio').innerHTML = `<div class="giorno">${g}</div>` + `<div class="data">${d} ${mese}</div>` + `<div class="ora">${h}:${m}</div>`;
     setTimeout(avviaOrologioD, 1000);
 }
 
@@ -30,18 +30,16 @@ function m_orologio(id){
     orologioBox = document.getElementById(id);
     orologioBox.innerHTML = `<div id="clock"></div>`;
 
+    orologioBox.style.backgroundImage = "url('m_orologio/SfondoOrologio.png')";
     orologioBox.style.cssText += `
-    font-family:Arial, Helvetica, sans-serif;
-    background-color: #23272a;
-    color: #000000;
-    display: flex;
+    background-size: cover;
+    background-position: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     justify-content: center;
     align-items: center;
-    margin: 0;
     text-align: center;
     font-size: 4vh;
     font-weight: bold;
-    background-color: #ffe100;
     padding: 10px 20px;
     `;
     avviaOrologioD()
@@ -110,4 +108,5 @@ function avviaOrologioA() {
     }
 
     setInterval(displayTime, 1000);
+    loadCSS('style.css');
 }

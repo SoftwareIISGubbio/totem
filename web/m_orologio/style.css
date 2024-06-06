@@ -1,70 +1,18 @@
-
-#clock {
-    position: relative;
-    background-image: url("SfondoOrologio.png");
-    background-position: center;
-    background-size: cover;
+.giorno {
+    font-size: 4vh;
+    margin-top: 30px;
+    font-weight: bold;
+    color: black;
 }
 
-#ora {
-    width: 300px; /* sovrascritto da programma */
-    height: 300px; /* sovrascritto da programma */
-    border-radius: 50%;
-    background-color: rgba(255, 5, 5, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    opacity: 0.8;
+.data {
+    font-size: 4vh;
+    font-weight: bold;
+    color: black;
 }
 
-#ora span {
-    position: absolute;
-    transform: rotate(calc(30deg * var(--i)));
-    inset: 12px;
-    text-align: center;
-}
-
-#ora span b {
-    transform: rotate(calc(-30deg * var(--i)));
-    display: inline-block;
-    font-size: 3vh;
-}
-
-#ora::before {
-    content: '';
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #fff;
-}
-
-.hand {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-}
-
-.hand i {
-    position: absolute;
-    background-color: var(--clr);
-    width: 4px;
-    height: 70px;
-    border-radius: 8px;
-}
-
-#hour i {
-    height: 70px;
-}
-
-#min i {
-    height: 100px;
-}
-
-#sec i {
-    height: 80px;
+.ora {
+    font-size: 6vh;
+    font-weight: bold;
+    color: black;
 }
