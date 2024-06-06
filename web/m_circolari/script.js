@@ -26,11 +26,11 @@ function circolariMostra(numero) {
 
     <!--   ricCategoria   -->
     <div class="categoria">
-        <span onclick="box_circolari.remove()">chiudi</span>
+        <span id="chiudi_box" onclick="circolari_box.remove()">chiudi</span>
         <select id="ricerca" onchange="ricerca()">
             <option disabled selected hidden>Ricerca per</option>
-            <option value="ricCategoria">Categoria</option>
-            <option value="ricNumero">Numero</option>
+            <option id="ric_cat" value="ricCategoria">Categoria</option>
+            <option id="ric_num" value="ricNumero">Numero</option>
         </select>
 
         <select id="ricCategoria" placeholder="Tipologia" onchange="carica()">
@@ -56,27 +56,18 @@ function circolariMostra(numero) {
 async function m_circolari(id) {
     let circolariBox = document.getElementById(id);
     let array = [];
-    let url = "http://10.1.0.52:8080/circolari?N=3";
+    let url = "http://10.1.0.52:8080/circolari?N=5";
     let risposta = await fetch(url);
     if (risposta.ok) {
-        let dati = await risposta.json();
-        for (let i = 0; i < 3; i++) {
-            array.push(dati[i]);
+        let array = await risposta.json();
+        for(let i=0; i<array.length; i++){
+            circolariBox.innerHTML += `<p onclick="circolariMostra('${array[i].numero}')"><strong>${array[i].numero}</strong>: ${array[i].nome}</p>`;
         }
+        circolariBox.innerHTML += `<p id="altro" onclick="circolariMostra()">Visualizza altre</p>`
     } else {
         console.log("Failed to fetch");
         // TODO: put something on the page!
     }
-
-    circolariBox.innerHTML = `
-        <p onclick="circolariMostra('${array[0].numero}')">${array[0].numero}: ${array[0].nome}</p>
-        <p onclick="circolariMostra('${array[1].numero}')">${array[1].numero}: ${array[1].nome}</p>
-        <p onclick="circolariMostra('${array[2].numero}')">${array[2].numero}: ${array[2].nome}</p>
-        <p onclick="circolariMostra()">visualizza altre</p>
-    `;
-    circolariBox.style.cssText = `
-        padding:1em;
-    `;
 
 }
 
