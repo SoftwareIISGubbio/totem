@@ -16,15 +16,16 @@ Per provare:
 
 se il server non è talos e state usando una qualche variante di unix:
 `export TOTEM_DATABASE=jdbc:mysql://192.168.64.7:3306/totem`
+`export TOTEM_CIRCOLARI=/Volumes/ramdisk/`
 
 ## Orario
 
 Carica i dati dell'orario dal file di FET presente sul sito
 
-per fare test: `mvn compile exec:java -Dexec.mainClass="it.edu.iisgubbio.robotcircolari.DownloadCircolari"`
+per eseguire il programma:
+`mvn compile exec:java -Dexec.mainClass="it.edu.iisgubbio.robotorario.Orario"`
 
 `mvn package` produce un jar avviabile
 
 se il server non è talos e state usando una qualche variante di unix:
 `export TOTEM_DATABASE=jdbc:mysql://192.168.64.7:3306/totem`
-`export TOTEM_CIRCOLARI=/Volumes/ramdisk/`

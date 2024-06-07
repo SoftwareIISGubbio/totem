@@ -1,10 +1,12 @@
 "use strict";
 
+const CELLA_VUOTA = "--";
+
 function clearTableCells() {
     const table = document.getElementById('tabella');
     const cells = table.getElementsByTagName('td');
     for (let i = 0; i < cells.length; i++) {
-        cells[i].innerText = '--';
+        cells[i].innerText = CELLA_VUOTA;
     }
 }
 
@@ -34,8 +36,9 @@ async function orario_recuperoPerProfessore() {
     orario_titolo.innerText="Prof. "+nome;
     for (let i = 0; i < elenco.length; i++) {
         let casella = "c" + elenco[i].giorno + elenco[i].ora;
-        let cella = document.getElementById(casella);
-        cella.innerText = elenco[i].classe;
+        // let cella = document.getElementById(casella);
+        // cella.innerText = elenco[i].classe;
+        aggiungiOra(casella, elenco[i], true, false);
     }
 }
 async function orario_comboClassi() {
@@ -63,9 +66,29 @@ async function orario_recuperoPerClasse() {
     orario_titolo.innerText="Classe "+classe;
     for (let i = 0; i < elenco.length; i++) {
         let casella = "c" + elenco[i].giorno + elenco[i].ora;
-        let cella = document.getElementById(casella);
-        cella.innerText = "";
-        cella.innerText = elenco[i].professore;
+        aggiungiOra(casella, elenco[i], false, true);
+        // let cella = document.getElementById(casella);
+        // cella.innerText = "";
+        // cella.innerText = elenco[i].professore;
+    }
+}
+
+function aggiungiOra(idCasella, descrizione, mostraClasse=true, mostraProf=true){
+    let cella = document.getElementById(idCasella);
+    console.log(descrizione);
+    let dClasse=mostraClasse?'<span class="classe">'+descrizione.classe+'</span>':'';
+    let dProff=mostraProf?'<span class="prof">'+descrizione.professore+'</span>':'';
+    if(cella.innerText==CELLA_VUOTA){
+        cella.innerHTML = `
+        <span class="aula">${descrizione.aula}</span>
+        <span class="materia">${descrizione.materia}</span>
+        ${dClasse}
+        ${dProff}`;
+    }else{
+        // TODO: verificare con STA se crea problemi non ripetere il nome della materia
+        cella.innerHTML += `
+        ${dClasse}
+        ${dProff}`;
     }
 }
 
@@ -85,13 +108,13 @@ function orarioMostra(){
     box_orario.innerHTML = `
     <div id="orario_pagina" class="orario_griglia">
         <div class="orario_professori">
-            <p>Prof</p>
+            <p>Prof: </p>
             <select id="prof" onchange="orario_recuperoPerProfessore()">
                 <option></option>
             </select>
         </div>
         <div class="orario_classi">
-            <p>Classi</p>
+            <p>Classi: </p>
             <select id="classi" onchange="orario_recuperoPerClasse()">
                 <option></option>
             </select>

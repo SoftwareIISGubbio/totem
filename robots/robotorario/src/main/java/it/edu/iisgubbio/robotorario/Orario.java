@@ -20,12 +20,6 @@ public class Orario {
 
         Elements tabelle = doc.select("table[class$=\"_table\"]");
 
-        for (Element tabella : tabelle) {
-            Element docente = tabella.select("thead tr:first-child").get(0);
-            System.out.println(docente.text());
-        }
-
-        System.out.println("Inserisci il nome del docente per visualizzare l'orario:");
         String nomeDocente;
         String url = getValore("TOTEM_DATABASE", "jdbc:mysql://10.1.0.52:3306/totem");
         String username = "totem";
@@ -50,16 +44,17 @@ public class Orario {
                             gestioneSpazi.occupa(nRiga, nColonna);
                             String classe = cella.select(".studentsset").text();
                             String aula = cella.select(".room").text();
-
-                            if (!classe.isEmpty() && !aula.isEmpty()) {
+                            String materia = cella.select(".subject").text().replace("'", "''");
+                            if(aula==null || aula.isEmpty()){
+                                aula = "?aula?";
+                            }
+                            if (!classe.isEmpty()) {
                                 String[] classiArray = classe.replaceAll("[\\(\\)\\[\\]]", "").split(",");
                                 for (String singolaClasse : classiArray) {
                                     singolaClasse = singolaClasse.trim();
-                                    String insert = "INSERT INTO orario (professore, aula, giorno, ora, classe) VALUES ('" + nomeDocente + "','" + aula + "','" + nColonna + "','" + nRiga + "','" + singolaClasse + "')";
+                                    String insert = "INSERT INTO orario (professore, aula, giorno, ora, classe, materia) VALUES ('" + nomeDocente + "','" + aula + "','" + nColonna + "','" + nRiga + "','" + singolaClasse + "','" + materia + "')";
                                     istruzione.executeUpdate(insert);
                                 }
-                                
-                            
                                 if (cella.hasAttr("rowspan")) {
                                     int rowspanValue = Integer.parseInt(cella.attr("rowspan"));
                                     if (rowspanValue == 2) {
@@ -67,7 +62,7 @@ public class Orario {
                                         if (!classe.isEmpty() && !aula.isEmpty()) {
                                             for (String singolaClasse : classiArray) {
                                                 singolaClasse = singolaClasse.trim();
-                                                String insert = "INSERT INTO orario (professore, aula, giorno, ora, classe) VALUES ('" + nomeDocente + "','" + aula + "','" + nColonna + "','" + (nRiga + 1) + "','" + singolaClasse + "')";
+                                                String insert = "INSERT INTO orario (professore, aula, giorno, ora, classe, materia) VALUES ('" + nomeDocente + "','" + aula + "','" + nColonna + "','" + (nRiga + 1) + "','" + singolaClasse + "','" + materia + "')";
                                                 istruzione.executeUpdate(insert);
                                             }
                                         }
@@ -75,7 +70,7 @@ public class Orario {
                                 }
                             }
 
-                            
+
                         } else {
                             int nColonna = gestioneSpazi.primaLibera(nRiga);
                             gestioneSpazi.occupa(nRiga, nColonna);

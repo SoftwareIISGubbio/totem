@@ -1,13 +1,13 @@
 .orario_griglia {
     margin: 0;
     height: 100vh;
+    overflow: scroll;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto 8fr;
     grid-template-areas:
         "prof classi chiudi"
-        "orario orario orario" 
-
+        "orario orario orario"
 }
 
 #allinea{
@@ -23,7 +23,7 @@
     background-color: yellow;
     display: flex;
     align-items: center;
-   
+
 }
 
 
@@ -43,7 +43,7 @@
     margin:0;
     padding-right: 2em;
     padding-top: 2em;
-    
+
 }
 
 .orario_chiudi span {
@@ -72,5 +72,30 @@ table{
 
 th, td {
     border: black solid 1px;
- 
+
+}
+
+#tabella td {
+    font-size:1rem;
+    margin:0.2em;
+    background-color: rgba(255, 255, 255, 0.65);
+}
+
+#tabella td {
+    color: #222
+}
+
+#tabella td .aula:after {
+    content:"\a";
+    white-space: pre;
+}
+
+#tabella td .materia {
+    font-weight: bold;
+}
+
+#tabella td .materia:after {
+    content:"\a";
+    white-space: pre;
+    font-weight: bold;
 }

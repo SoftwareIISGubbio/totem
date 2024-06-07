@@ -10,14 +10,13 @@ public class Orario {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-	
-	
 	String classe;
 	String professore;
 	String aula;
+	String materia;
 	Integer ora;
 	Integer giorno;
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -42,6 +41,12 @@ public class Orario {
 	public void setAula(String aula) {
 		this.aula = aula;
 	}
+	public String getMateria() {
+		return materia;
+	}
+	public void setMateria(String materia) {
+		this.materia = materia;
+	}
 	public Integer getOra() {
 		return ora;
 	}
@@ -54,6 +59,4 @@ public class Orario {
 	public void setGiorno(Integer giorno) {
 		this.giorno = giorno;
 	}
-	
-	
 }

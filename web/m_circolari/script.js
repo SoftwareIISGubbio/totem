@@ -126,10 +126,11 @@ function carica() {
     }
 }
 
-async function ricercaCircolari(cosaCercare) {
-    let url = cosaCercare.length>0 
+async function ricercaCircolari(cosaCercare="") {
+    let url = cosaCercare.length>0
         ? `http://10.1.0.52:8080/circolari?${cosaCercare}=1`
         : `http://10.1.0.52:8080/circolari`;
+    console.log(url);
     let risposta = await fetch(url);
     if (risposta.ok) {
         let dati = await risposta.json();
