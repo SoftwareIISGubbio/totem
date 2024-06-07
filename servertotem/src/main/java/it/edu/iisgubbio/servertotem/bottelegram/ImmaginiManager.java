@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class ImmaginiManager {
 	@Autowired
-	ImmaginiRepository repoCampo;
+	ImmaginiRepository immaginiRepository;
 
     @Value("${totem.immaginibot}")
     String directoryPath;
@@ -54,5 +54,12 @@ public class ImmaginiManager {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        
     }
+    @GetMapping("/notizie")
+    public List<Immagini> cerca(
+	    	@RequestParam(required = true) Integer N
+	    ) {
+		    return immaginiRepository.ultime(N);
+        }
 }

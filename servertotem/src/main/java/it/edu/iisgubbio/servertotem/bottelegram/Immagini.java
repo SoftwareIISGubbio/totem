@@ -11,21 +11,21 @@ public class Immagini {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String userName;
+    private String username;
     private LocalDate data;
-    private Integer descizione;
-    private Integer tag;
+    private String descrizione;
+    private String tag;
     public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getUser_name() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
-	public void setUser_name(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public LocalDate getData() {
 		return data;
@@ -33,16 +33,16 @@ public class Immagini {
 	public void setData(LocalDate data) {
 		this.data = data;
 	}
-	public Integer getDescizione() {
-		return descizione;
+	public String getDescrizione() {
+		return descrizione;
 	}
-	public void setDescizione(Integer descizione) {
-		this.descizione = descizione;
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
-	public Integer getTag() {
+	public String getTag() {
 		return tag;
 	}
-	public void setTag(Integer tag) {
+	public void setTag(String tag) {
 		this.tag = tag;
 	}
 
