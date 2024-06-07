@@ -54,23 +54,30 @@ function circolariMostra(numero) {
 }
 
 async function m_circolari(id) {
-    let circolariBox = document.getElementById(id);
+    circolari_box = document.getElementById(id);
+    aggiornaElenco();
+}
+
+
+async function aggiornaElenco(){
+    console.log("aggiornaElenco");
     let array = [];
     let url = "http://10.1.0.52:8080/circolari?N=5";
     let risposta = await fetch(url);
     if (risposta.ok) {
+        let tmp = "<h1>Circolari</h1>";
         let array = await risposta.json();
         for(let i=0; i<array.length; i++){
-            circolariBox.innerHTML += `<p onclick="circolariMostra('${array[i].numero}')"><strong>${array[i].numero}</strong>: ${array[i].nome}</p>`;
+            tmp += `<p onclick="circolariMostra('${array[i].numero}')"><strong>${array[i].numero}</strong>: ${array[i].nome}</p>`;
         }
-        circolariBox.innerHTML += `<p id="altro" onclick="circolariMostra()">Visualizza altre</p>`
+        tmp += `<p id="altro" onclick="circolariMostra()">Visualizza altre</p>`
+        circolari_box.innerHTML = tmp;
     } else {
         console.log("Failed to fetch");
         // TODO: put something on the page!
     }
-
+    setTimeout(aggiornaElenco, 15*60*1000); // aggiorno una volta ogni 15 minuti
 }
-
 
 function ricerca() {
     let ricercaSelezionata = document.getElementById("ricerca").value;

@@ -3,7 +3,7 @@
 come creare e gestire il db
 
 ## creazione su debian
-va installato il server se non lòo è già
+va installato il server se non lò è già
 
     apt install mariadb-server
 
