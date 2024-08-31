@@ -30,8 +30,9 @@ function m_orologio(id){
     orologioBox = document.getElementById(id);
     orologioBox.innerHTML = `<div id="clock"></div>`;
 
-    orologioBox.style.backgroundImage = "url('m_orologio/SfondoOrologio.png')";
+    // orologioBox.style.backgroundImage = "url('m_orologio/SfondoOrologio.png')";
     orologioBox.style.cssText += `
+    background-color: #eecd00;
     background-size: cover;
     background-position: center;
     font-family: Georgia, 'Times New Roman', Times, serif;

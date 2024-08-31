@@ -35,10 +35,11 @@ async function meteoAggiorna(){
             for(let i=0; i<icona.length; i++){
                 url="https://openweathermap.org/img/wn/"+dati.list[i].weather[0].icon+"@2x.png";
                 icona[i].src=url;
-                let transito = (dati.list[i].main.temp+"°").split(".");
+                let transito = (dati.list[i].main.temp+"").split(".");
                 temperatura[i].innerText= transito[0]+"°";
             }
             let id = dati.list[0].weather[0].icon;
+            id = id.replace("n", "d"); // FIXME: una scappatoia, fingiamo che è sempre giorno
             meteoBox.style.backgroundImage= "url('"+immagini[id]+"')";    
         }
 }
@@ -62,19 +63,19 @@ function m_meteo(id){
     `;
     meteoBox.innerHTML = `
             <span class="ora">caio</span>
-            <img class="icon" alt="icon" style="height: 12.5vh">
+            <img class="icon" alt="icon">
             <span class="tempo"></span>
         
             <span class="ora"></span>
-            <img class="icon" alt="icon" style="height: 12.5vh">
+            <img class="icon" alt="icon">
             <span class="tempo"></span>
         
             <span class="ora"></span>
-            <img class="icon" alt="icon" style="height: 12.5vh">
+            <img class="icon" alt="icon">
             <span class="tempo"></span>
         
             <span class="ora"></span>
-            <img class="icon" alt="icon" style="height: 12.5vh">
+            <img class="icon" alt="icon">
             <span class="tempo"></span>
     `;
     meteoAggiorna();

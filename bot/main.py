@@ -7,6 +7,8 @@ from PIL import Image
 from datetime import datetime
 
 API_TOKEN = "6693052658:AAHY8dHg8j2lip9tKWD8TmUL47R2WMgN8yg"
+indirizzo_server = os.getenv('SERVER_TOTEM', "10.1.0.52");
+cartella_immagini = os.getenv('IMMAGINI_TOTEM', "totem/bot/immagini");
 bot = telebot.TeleBot(API_TOKEN)
 print("bot online")
 
@@ -44,7 +46,7 @@ def scaricoImmagine(message):
         caption = message.caption
 
         db = mysql.connector.connect(
-            host = "10.1.0.52",
+            host = indirizzo_server,
             user = "totem",
             password = "totem",
             database = "totem"
@@ -54,7 +56,7 @@ def scaricoImmagine(message):
         cursor.execute("INSERT INTO immagini (tag, username, data, descrizione) VALUES ('{0}','{1}','{2}','{3}')".format(tag, username, data, caption))
         db.commit() # salvatagggio
 
-        with open("totem/bot/immagini/"+tag+".jpg", 'wb') as new_file:
+        with open(cartella_immagini+"/"+tag+".jpg", 'wb') as new_file:
             new_file.write(downloaded_file)
 
         bot.send_message(message.chat.id, "Immagine salvata correttamente!")

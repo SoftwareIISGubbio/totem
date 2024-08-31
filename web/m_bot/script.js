@@ -12,8 +12,7 @@ async function m_bot(id){
     botBox.innerHTML = `
        <img src="${urlImmagine}" alt="lavori in corso" style="height: 40vh">
        <p>${elenco[0].descrizione}</p>`;
-    botBox.style.cssText = `
-        padding:1em;text-align:center;
-    `;
+
+    // FIXME: le misure dell'immagine vanno calcolate perché dipende se è verticale o orizzontale
 
 }
