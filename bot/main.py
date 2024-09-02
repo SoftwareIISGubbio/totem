@@ -8,7 +8,7 @@ from datetime import datetime
 
 API_TOKEN = "6693052658:AAHY8dHg8j2lip9tKWD8TmUL47R2WMgN8yg"
 indirizzo_server = os.getenv('SERVER_TOTEM', "10.1.0.52");
-cartella_immagini = os.getenv('IMMAGINI_TOTEM', "totem/bot/immagini");
+cartella_immagini = os.getenv('IMMAGINI_TOTEM', "/var/lib/totem/immaginibot");
 bot = telebot.TeleBot(API_TOKEN)
 print("bot online")
 
