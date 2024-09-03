@@ -65,6 +65,10 @@
     background-color: yellow;
 }
 
+#prof, #classi { 
+    font-size:3vh;
+}
+
 table{
     width: 100%;
     border-collapse: collapse;
