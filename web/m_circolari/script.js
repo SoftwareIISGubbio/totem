@@ -25,6 +25,7 @@ function circolariMostra(numero) {
     </div>
 
     <!--   ricCategoria   -->
+    <!-- FIXME: oscurata la ricerca
     <div class="categoria">
         <span id="chiudi_box" onclick="circolari_box.remove()">chiudi</span>
         <select id="ricerca" onchange="ricerca()">
@@ -48,9 +49,11 @@ function circolariMostra(numero) {
         </div>
 
     </div>
+    -->
 </div>
     `;
     document.body.appendChild(box);
+    ricercaCircolari();
 }
 
 async function m_circolari(id) {
@@ -68,7 +71,7 @@ async function aggiornaElenco(){
         let tmp = "<h1>Circolari</h1>";
         let array = await risposta.json();
         for(let i=0; i<array.length; i++){
-            tmp += `<p onclick="circolariMostra('${array[i].numero}')"><strong>${array[i].numero}</strong>: ${array[i].nome}</p>`;
+            tmp += `<p onclick="circolariMostra('${array[i].numero}')"><strong>CIRC${array[i].numero}</strong>: ${array[i].nome}</p>`;
         }
         tmp += `<p id="altro" onclick="circolariMostra()">Visualizza altre</p>`
         circolari_box.innerHTML = tmp;
