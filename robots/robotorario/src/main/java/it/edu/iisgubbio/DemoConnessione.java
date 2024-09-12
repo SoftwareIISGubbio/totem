@@ -7,7 +7,7 @@ import java.sql.Statement;
 public class DemoConnessione {
     public static void main(String[] args) throws Exception {
         System.out.println("ciao");
-        String url = "jdbc:mysql://192.168.64.7:3306/prova";
+        String url = "jdbc:mariadb://192.168.64.7:3306/prova";
         String username = "utente";
         String password = "password";
 
