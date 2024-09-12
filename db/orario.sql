@@ -6,5 +6,5 @@ CREATE TABLE orario (
   ora int DEFAULT NULL, -- 0 prima ora
   classe varchar(50) NOT NULL,
   materia varchar(200) NOT NULL,
-  categoria varchar(15) NOT NULL, -- "curricolare", "sostegno" (forse in futuro)
+  categoria varchar(15) NOT NULL -- "curricolare", "sostegno" (forse in futuro)
 );
