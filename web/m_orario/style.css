@@ -114,3 +114,7 @@ th, td {
 table tr:nth-last-child(-n+5) {
     display: none;
 }
+
+#orario_box select {
+    min-width: 6em;
+}

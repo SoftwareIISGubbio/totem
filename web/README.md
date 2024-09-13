@@ -5,6 +5,18 @@ che fanno i diversi lavori.
 
 Rischia di essere un bel caos ma una parte dovremmo averla già fatta
 
+
+## Firefox
+
+nella cartella del profilo di Firefox (.mozilla/nafiladerobestrane/)
+se non c'è va creato il file ´prefs.js´ e inserite
+(l'ultima ovviamente è sospetta)
+
+    user_pref("widget.non-native-theme.scrollbar.style", 4);
+    user_pref("widget.non-native-theme.scrollbar.size.override", 40);
+    user_pref("layout.testing.overlay-scrollbars.always-visible", true);
+
+
 ## debug
 
 Supponiamo che per fare debug si usi come client e come server web la stessa macchina
