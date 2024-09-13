@@ -25,9 +25,9 @@ function circolariMostra(numero) {
     </div>
 
     <!--   ricCategoria   -->
-    <!-- FIXME: oscurata la ricerca
     <div class="categoria">
         <span id="chiudi_box" onclick="circolari_box.remove()">chiudi</span>
+<!-- oscurata la ricerca 
         <select id="ricerca" onchange="ricerca()">
             <option disabled selected hidden>Ricerca per</option>
             <option id="ric_cat" value="ricCategoria">Categoria</option>
@@ -47,9 +47,9 @@ function circolariMostra(numero) {
             <input type="number" min="1" placeholder="Numero cirolare..." id="ricNumero" name="ricNumero">
             <button id="cercaNum" onclick="caricaPerNumero()">Cerca</button>
         </div>
-
+-->
     </div>
-    -->
+    
 </div>
     `;
     document.body.appendChild(box);
