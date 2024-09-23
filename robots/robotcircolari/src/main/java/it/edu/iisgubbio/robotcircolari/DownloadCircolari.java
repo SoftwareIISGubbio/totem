@@ -29,7 +29,7 @@ import java.sql.Statement;
  * @author Filippo Nardoni
  ***************************************************************************/
 public class DownloadCircolari {
-	static String url = getValore("TOTEM_DATABASE","jdbc:mysql://10.1.0.52:3306/totem");
+	static String url = getValore("TOTEM_DATABASE","jdbc:mariadb://10.1.0.52:3306/totem");
 	static String pathCircolari = getValore("TOTEM_CIRCOLARI","/tmp/");
 	static String username = "totem";
 	static String password = "totem";
