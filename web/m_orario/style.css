@@ -111,9 +111,9 @@ th, td {
 /* workaround per inizio anno a orario ridotto */
 
 /* prime 4 ore, nascondo ultimi 5 figli (5-6-7-8 ora e pranzo */
-table tr:nth-last-child(-n+5) {
+/*table tr:nth-last-child(-n+5) {
     display: none;
-}
+}*/
 
 #orario_box select {
     min-width: 6em;
