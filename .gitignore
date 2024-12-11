@@ -27,3 +27,6 @@ buildNumber.properties
 
 
 /bot/penv
+
+# il file indice lo mettiamo come link simbolico verso un altro di quelli disponibili
+web/index.html
