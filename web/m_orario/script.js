@@ -225,6 +225,6 @@ function orarioMostra(){
 function m_orario(id){
     let orarioBox = document.getElementById(id);
     orarioBox.style.cssText += `display:flex`;
-    orarioBox.innerHTML = `<img src="m_orario/ico_orario.png" alt="lavori in corso" >`;
+    orarioBox.innerHTML = `<img style="max-width:100%;max-height:100%" src="m_orario/ico_orario.png" alt="orario" >`;
     orarioBox.addEventListener('click', orarioMostra);
 }
