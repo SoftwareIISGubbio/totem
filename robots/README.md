@@ -25,11 +25,9 @@ Carica i dati dell'orario dal file di FET presente sul sito
 
 Per provare, se il server non è talos e state usando una qualche variante di unix:
 
-impostare il server a cui inviare i dati: `export TOTEM_DATABASE=jdbc:mariadb://192.168.64.7:3306/totem`
+impostare il server a cui inviare i dati:
+`export TOTEM_DATABASE=jdbc:mariadb://192.168.64.7:3306/totem`
 
 `mvn compile exec:java -Dexec.mainClass="it.edu.iisgubbio.robotorario.Orario"`
 
 `mvn package` produce un jar avviabile
-
-se il server non è talos e state usando una qualche variante di unix:
-`export TOTEM_DATABASE=jdbc:mariadb://192.168.64.7:3306/totem`

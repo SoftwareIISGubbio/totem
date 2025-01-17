@@ -3,7 +3,7 @@
     background-color: #EECD00;
     font-family: Arial, Helvetica, sans-serif;
     padding: 1em;
-   
+    overflow-y: scroll;
 }
 
 #circolari p{
